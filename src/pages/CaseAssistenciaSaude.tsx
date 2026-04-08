@@ -1,47 +1,843 @@
-import Nav from '../components/layout/Nav'
-import Footer from '../components/layout/Footer'
-import NavDots from '../components/case/NavDots'
-import CaseHeader from '../components/case/CaseHeader'
-import CaseSummary from '../components/case/CaseSummary'
-import CaseContent from '../components/case/CaseContent'
-import CaseMetrics from '../components/case/CaseMetrics'
-import CaseNextProjects from '../components/case/CaseNextProjects'
-import caseData from '../data/cases/assistencia-saude'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-const navSections = caseData.sections
-  .filter((s) => s.heading)
-  .map((s) => ({ id: s.id, label: s.heading! }))
+const caseCss = `
+/* ── TOKENS ── */
+:root {
+  --bg:         #FAFAF8;
+  --bg-card:    #FFFFFF;
+  --bg-card-alt:#F5F2EE;
+  --text:       #1A1A1A;
+  --text-muted: #6B6B6B;
+  --text-dim:   #9E9E9E;
+  --bordô:      #7F1D1D;
+  --bordô-light:#A52828;
+  --bordô-bg:   rgba(127,29,29,0.06);
+  --bordô-border:rgba(127,29,29,0.18);
+  --dourado:    #92712A;
+  --dourado-light:#B8962E;
+  --dourado-bg: rgba(146,113,42,0.07);
+  --dourado-border:rgba(146,113,42,0.22);
+  --border:     rgba(0,0,0,0.07);
+  --shadow:     0 2px 16px rgba(0,0,0,0.06);
+  --shadow-md:  0 8px 32px rgba(0,0,0,0.10);
+  --shadow-lg:  0 20px 60px rgba(0,0,0,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+h1 { font-family: 'Raleway', sans-serif; font-size: clamp(36px, 5vw, 68px); font-weight: 800; line-height: 1.06; letter-spacing: -0.03em; color: var(--text); }
+h2 { font-family: 'Raleway', sans-serif; font-size: clamp(24px, 3vw, 40px); font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; color: var(--text); }
+h3 { font-family: 'Raleway', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+p { font-size: 16px; line-height: 1.75; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+.stat-num { font-family: 'Raleway', sans-serif; font-size: clamp(40px, 4.5vw, 64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--bordô); }
+.stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.10em; color: var(--text-dim); margin-top: 8px; font-family: 'Inter', sans-serif; }
+
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: rgba(250,250,248,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+nav.scrolled { box-shadow: var(--shadow); }
+.nav-left { display: flex; align-items: center; gap: 20px; }
+.nav-back { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--text-dim); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-back:hover { color: var(--bordô); }
+.nav-sep { width: 1px; height: 16px; background: var(--border); }
+.nav-brand { font-family: 'Raleway', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted); text-transform: uppercase; }
+.nav-brand span { color: var(--bordô); }
+.nav-dots { display: flex; gap: 10px; align-items: center; }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); border: 1.5px solid var(--text-dim); cursor: pointer; transition: all 0.3s; }
+.nav-dot.active { background: var(--bordô); border-color: var(--bordô); transform: scale(1.5); }
+
+/* ── LAYOUT ── */
+section { min-height: 100vh; padding: 120px 64px 80px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.container { max-width: 1080px; margin: 0 auto; width: 100%; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+/* ── CARDS ── */
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); transition: all 0.3s; }
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: rgba(0,0,0,0.12); }
+.card-bordô { border-color: var(--bordô-border); background: var(--bordô-bg); }
+.card-dourado { border-color: var(--dourado-border); background: var(--dourado-bg); }
+.card-neutral { background: var(--bg-card-alt); border-color: var(--border); }
+
+/* ── SECTION LABEL ── */
+.section-label { display: inline-flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bordô); margin-bottom: 20px; }
+.section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--bordô); border-radius: 2px; }
+
+/* ── BADGE ── */
+.badge { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+.badge-validada { background: rgba(34,139,34,0.10); color: #1a6b1a; border: 1px solid rgba(34,139,34,0.25); }
+.badge-refutada { background: rgba(100,100,100,0.10); color: #555; border: 1px solid rgba(100,100,100,0.25); }
+.badge-bordô { background: var(--bordô-bg); color: var(--bordô); border: 1px solid var(--bordô-border); }
+.badge-dourado { background: var(--dourado-bg); color: var(--dourado); border: 1px solid var(--dourado-border); }
+
+/* ── QUOTE BLOCK ── */
+.quote-block { border-left: 3px solid var(--bordô); padding: 18px 24px; background: var(--bordô-bg); border-radius: 0 12px 12px 0; font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.72; color: var(--text); font-style: italic; margin: 24px 0; }
+.quote-block cite { display: block; margin-top: 10px; font-size: 12px; font-style: normal; font-weight: 600; color: var(--text-dim); letter-spacing: 0.04em; }
+
+/* ── DIVIDER ── */
+.divider { width: 100%; height: 1px; background: var(--border); margin: 40px 0; }
+
+/* ── SUMMARY BLOCK ── */
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 40px 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.summary-item { background: var(--bg-card); padding: 28px 24px; }
+.summary-item:not(:last-child) { border-right: 1px solid var(--border); }
+.summary-key { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bordô); margin-bottom: 10px; }
+.summary-val { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; color: var(--text-muted); }
+
+/* ── TIMELINE ── */
+.timeline { display: flex; align-items: flex-start; position: relative; margin-top: 40px; }
+.timeline-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+.timeline-step:not(:last-child)::after { content: ''; position: absolute; top: 20px; left: 50%; width: 100%; height: 2px; background: linear-gradient(90deg, var(--bordô), rgba(127,29,29,0.08)); }
+.timeline-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--bordô); display: flex; align-items: center; justify-content: center; font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 800; color: #FAFAF8; position: relative; z-index: 1; box-shadow: 0 0 0 6px rgba(127,29,29,0.10); }
+.timeline-content { margin-top: 16px; padding: 0 8px; }
+.timeline-title { font-family: 'Raleway', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.timeline-desc { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.timeline-v { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+.timeline-v-item { display: flex; gap: 20px; align-items: flex-start; }
+.timeline-v-item:not(:last-child) .timeline-v-line-wrap::after { content: ''; display: block; width: 2px; background: var(--bordô-border); flex: 1; min-height: 32px; margin: 4px auto 0; }
+.timeline-v-line-wrap { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; }
+.timeline-v-circle { width: 36px; height: 36px; border-radius: 50%; background: var(--bordô); display: flex; align-items: center; justify-content: center; font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 800; color: #FAFAF8; flex-shrink: 0; }
+.timeline-v-content { padding-bottom: 32px; flex: 1; }
+.timeline-v-title { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; margin-top: 6px; }
+.timeline-v-desc { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; color: var(--text-muted); }
+
+/* ── HIP ROW ── */
+.hip-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; transition: all 0.2s; }
+.hip-row:hover { background: var(--bg-card-alt); }
+.hip-text strong { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); display: block; margin-bottom: 2px; }
+.hip-text span { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); }
+
+/* ── PHOTO GRID ── */
+.photo-grid-3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; gap: 12px; margin-top: 28px; }
+.photo-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+.photo-grid-mixed { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 28px; }
+.photo-item { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #F0ECE6; cursor: zoom-in; }
+.photo-item img { width: 100%; display: block; transition: transform 0.4s ease; }
+.photo-item:hover img { transform: scale(1.03); }
+.photo-item.tall { grid-row: span 2; }
+.photo-caption { padding: 8px 12px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); background: var(--bg-card); border-top: 1px solid var(--border); }
+
+/* ── BEFORE/AFTER ── */
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); margin-top: 28px; }
+.before-side, .after-side { padding: 28px; }
+.before-side { background: var(--bg-card-alt); border-right: 1px solid var(--border); }
+.after-side { background: var(--bg-card); }
+.ba-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+.ba-label.before { color: var(--text-dim); }
+.ba-label.after { color: var(--bordô); }
+.ba-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); }
+.ba-item:last-child { border-bottom: none; }
+
+/* ── INFLUÊNCIA CARDS ── */
+.influence-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-top: 28px; }
+.influence-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: var(--shadow); transition: all 0.3s; border-left: 3px solid var(--dourado); }
+.influence-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.influence-who { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.influence-need { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dourado); margin-bottom: 10px; }
+.influence-how { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; color: var(--text-muted); }
+
+/* ── RESULTADO METRICS ── */
+.result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 32px; }
+.result-card { background: var(--bg-card); border: 1px solid var(--dourado-border); border-radius: 16px; padding: 32px 24px; text-align: center; box-shadow: var(--shadow); }
+.result-num { font-family: 'Raleway', sans-serif; font-size: clamp(36px,4vw,56px); font-weight: 900; letter-spacing: -0.03em; color: var(--bordô); line-height: 1; }
+.result-label { font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); margin-top: 10px; margin-bottom: 6px; }
+.result-desc { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* ── APRENDIZADOS ── */
+.aprendizado-item { display: flex; gap: 20px; align-items: flex-start; padding: 28px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; box-shadow: var(--shadow); transition: all 0.3s; }
+.aprendizado-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.aprendizado-num { font-family: 'Raleway', sans-serif; font-size: 28px; font-weight: 900; color: var(--bordô-border); line-height: 1; flex-shrink: 0; width: 36px; }
+.aprendizado-title { font-family: 'Raleway', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.aprendizado-desc { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; color: var(--text-muted); }
+
+/* ── REFRAME BLOCK ── */
+.reframe-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; position: relative; overflow: hidden; box-shadow: var(--shadow); margin-top: 28px; }
+.reframe-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--bordô), var(--dourado)); }
+.reframe-vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin-top: 24px; }
+.reframe-side { padding: 18px 22px; border-radius: 10px; }
+.reframe-side.before { background: rgba(0,0,0,0.03); border: 1px solid var(--border); }
+.reframe-side.after { background: var(--bordô-bg); border: 1px solid var(--bordô-border); }
+.reframe-lbl { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+.reframe-lbl.before { color: var(--text-dim); }
+.reframe-lbl.after { color: var(--bordô); }
+.reframe-txt { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; }
+.reframe-arrow { font-size: 22px; color: var(--text-dim); text-align: center; }
+
+/* ── HERO SECTION ── */
+#hero { min-height: 100vh; background: var(--bg); position: relative; }
+#hero::before { content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 100%; background: linear-gradient(135deg, transparent, rgba(127,29,29,0.03)); pointer-events: none; }
+.hero-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+.hero-company { display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-muted); }
+.company-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bordô); }
+.hero-read-time { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-dim); }
+.hero-image { margin-top: 48px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
+.hero-image img { width: 100%; display: block; background: #f0ece6; }
+
+/* ── PILL ROW ── */
+.pill { font-family: 'Inter', sans-serif; background: var(--bg-card); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; font-size: 13px; font-weight: 500; color: var(--text); display: inline-block; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+/* ── LIGHTBOX ── */
+.lightbox-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(26,26,26,0.94); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(8px); padding: 24px; }
+.lightbox-overlay.open { opacity: 1; pointer-events: all; }
+.lightbox-inner { position: relative; max-width: 92vw; max-height: 90vh; }
+.lightbox-inner img { max-width: 100%; max-height: 88vh; border-radius: 12px; object-fit: contain; display: block; box-shadow: 0 32px 80px rgba(0,0,0,0.5); }
+.lightbox-close { position: absolute; top: -14px; right: -14px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
+.lightbox-close:hover { background: rgba(255,255,255,0.25); }
+.lightbox-caption { text-align: center; margin-top: 14px; font-family: 'Inter', sans-serif; font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; letter-spacing: 0.02em; }
+
+/* ── FADE UP ── */
+.fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+
+/* ── RESPONSIVO ── */
+@media (max-width: 900px) {
+  section { padding: 100px 24px 60px; }
+  nav { padding: 16px 24px; }
+  .grid-2, .grid-3, .photo-grid-3, .photo-grid-2, .photo-grid-mixed,
+  .summary-grid, .before-after, .influence-grid, .result-grid,
+  .reframe-vs { grid-template-columns: 1fr; }
+  .before-side { border-right: none; border-bottom: 1px solid var(--border); }
+  .timeline { flex-direction: column; gap: 24px; }
+  .timeline-step::after { display: none; }
+  .photo-item.tall { grid-row: span 1; }
+}
+`
 
 export default function CaseAssistenciaSaude() {
+  useEffect(() => {
+    // Inject CSS
+    const styleEl = document.createElement('style')
+    styleEl.id = 'case-assistencia-styles'
+    styleEl.textContent = caseCss
+    document.head.appendChild(styleEl)
+
+    // Nav scroll
+    const nav = document.getElementById('mainNav')
+    const handleScroll = () => { nav?.classList.toggle('scrolled', window.scrollY > 20) }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    // Nav dots
+    const sectionIds = ['hero', 'diagnostico', 'evidencias', 'solucao', 'impacto', 'resultado']
+    const dots = document.querySelectorAll('.nav-dot')
+
+    const sectObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const idx = sectionIds.indexOf(e.target.id)
+          dots.forEach(d => d.classList.remove('active'))
+          if (idx >= 0) dots[idx].classList.add('active')
+        }
+      })
+    }, { threshold: 0.15, rootMargin: '-10% 0px -10% 0px' })
+
+    sectionIds.forEach(id => { const el = document.getElementById(id); if (el) sectObs.observe(el) })
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        document.getElementById(sectionIds[i])?.scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+
+    // Lightbox
+    const overlay = document.getElementById('lightbox')
+    const lbImg = document.getElementById('lightboxImg') as HTMLImageElement | null
+    const lbCap = document.getElementById('lightboxCaption')
+    const lbClose = document.getElementById('lightboxClose')
+
+    const openLightbox = (src: string, caption: string) => {
+      if (lbImg) lbImg.src = src
+      if (lbCap) lbCap.textContent = caption || ''
+      overlay?.classList.add('open')
+      document.body.style.overflow = 'hidden'
+    }
+    const closeLightbox = () => {
+      overlay?.classList.remove('open')
+      document.body.style.overflow = ''
+      setTimeout(() => { if (lbImg) lbImg.src = '' }, 300)
+    }
+
+    document.querySelectorAll('.photo-item img').forEach(img => {
+      img.addEventListener('click', () =>
+        openLightbox((img as HTMLImageElement).src, (img as HTMLImageElement).alt)
+      )
+    })
+    overlay?.addEventListener('click', e => { if (e.target === overlay) closeLightbox() })
+    lbClose?.addEventListener('click', closeLightbox)
+
+    // Fade up
+    const fadeEls = document.querySelectorAll('.fade-up')
+    const fadeObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+    }, { threshold: 0.08 })
+    fadeEls.forEach(el => fadeObs.observe(el))
+
+    // Keyboard
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { closeLightbox(); return }
+      const cur = Array.from(dots).findIndex(d => d.classList.contains('active'))
+      if ((e.key === 'ArrowDown' || e.key === ' ') && cur < sectionIds.length - 1) {
+        if (e.key === ' ') e.preventDefault()
+        document.getElementById(sectionIds[cur + 1])?.scrollIntoView({ behavior: 'smooth' })
+      }
+      if (e.key === 'ArrowUp' && cur > 0) {
+        e.preventDefault()
+        document.getElementById(sectionIds[cur - 1])?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.getElementById('case-assistencia-styles')?.remove()
+      window.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('keydown', handleKeyDown)
+      sectObs.disconnect()
+      fadeObs.disconnect()
+      document.body.style.overflow = ''
+    }
+  }, [])
+
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
-      <Nav />
-      <NavDots sections={navSections} />
-      <main>
-        <CaseHeader
-          company={caseData.company}
-          readTime={caseData.readTime}
-          title={caseData.title}
-          heroImage={caseData.heroImage}
-          heroImageAlt={caseData.heroImageAlt}
-        />
-        <CaseMetrics
-          metrics={caseData.metrics}
-          note={caseData.metricsNote}
-        />
-        <CaseSummary items={caseData.summary} />
-        <CaseContent sections={caseData.sections} />
-        <CaseNextProjects
-          projects={[
-            {
-              company: 'TOTVS TECHFIN',
-              label: '84% de redução em chamados por dúvida.',
-              comingSoon: true,
-            },
-          ]}
-        />
-      </main>
-      <Footer />
-    </div>
+    <>
+      {/* NAV */}
+      <nav id="mainNav">
+        <div className="nav-left">
+          <Link to="/" className="nav-back">← Portfólio</Link>
+          <div className="nav-sep"></div>
+          <div className="nav-brand">Assistência Saúde — <span>PicPay</span></div>
+        </div>
+        <div className="nav-dots">
+          <div className="nav-dot active" data-section="hero"></div>
+          <div className="nav-dot" data-section="diagnostico"></div>
+          <div className="nav-dot" data-section="evidencias"></div>
+          <div className="nav-dot" data-section="solucao"></div>
+          <div className="nav-dot" data-section="impacto"></div>
+          <div className="nav-dot" data-section="resultado"></div>
+        </div>
+      </nav>
+
+      {/* LIGHTBOX */}
+      <div className="lightbox-overlay" id="lightbox">
+        <div className="lightbox-inner">
+          <div className="lightbox-close" id="lightboxClose">✕</div>
+          <img src="" id="lightboxImg" alt="" />
+          <div className="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+      </div>
+
+      {/* ═══════════════════ SEÇÃO 1 — HERO ═══════════════════ */}
+      <section id="hero">
+        <div className="container">
+
+          <div className="fade-up">
+            <div className="hero-meta">
+              <div className="hero-company">
+                <div className="company-dot"></div>
+                PicPay · Seguros &amp; Saúde · 2025
+              </div>
+              <div className="hero-read-time">· 8 min de leitura</div>
+            </div>
+          </div>
+
+          <div className="fade-up stagger-1">
+            <h1>O problema não era churn.<br />Era percepção de valor.</h1>
+          </div>
+
+          <div className="fade-up stagger-2" style={{ marginTop: '20px', maxWidth: '640px' }}>
+            <p>Com 16% de churn em um produto de assistência saúde, o time buscava soluções de retenção. Identifiquei que estava atacando o sintoma errado — e mudei a direção antes de qualquer investimento em retenção.</p>
+          </div>
+
+          {/* Stats */}
+          <div className="fade-up stagger-3" style={{ display: 'flex', gap: '48px', flexWrap: 'wrap', marginTop: '48px', paddingTop: '40px', borderTop: '1px solid var(--border)' }}>
+            <div><div className="stat-num">16%</div><div className="stat-label">Churn inicial</div></div>
+            <div><div className="stat-num">↓ 0,97 p.p.</div><div className="stat-label">Redução após mudanças</div></div>
+            <div><div className="stat-num">~5 mil</div><div className="stat-label">Apólices preservadas</div></div>
+            <div><div className="stat-num">R$50k</div><div className="stat-label">Receita preservada</div></div>
+          </div>
+
+          {/* Summary */}
+          <div className="fade-up stagger-4">
+            <div className="summary-grid">
+              <div className="summary-item">
+                <div className="summary-key">Challenge</div>
+                <div className="summary-val">Produto com 16% de churn. O time buscava retenção enquanto o problema real estava na experiência de pós-venda.</div>
+              </div>
+              <div className="summary-item">
+                <div className="summary-key">Strategy</div>
+                <div className="summary-val">Redefini o problema: churn era sintoma de desalinhamento entre promessa e experiência. Validei em duas camadas antes de propor qualquer solução.</div>
+              </div>
+              <div className="summary-item">
+                <div className="summary-key">Results</div>
+                <div className="summary-val">↓ 0,97 p.p. no churn. ~5 mil apólices preservadas. Tracking implementado onde antes havia ausência total de dado.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Hero image */}
+          <div className="fade-up" style={{ marginTop: '48px' }}>
+            <div className="hero-image">
+              <img src="/cases/assistencia-saude/IS-TOBE-hub.png" alt="Hub de pós-venda — AS IS vs TO BE" style={{ objectFit: 'contain', background: '#f5f5f5' }} loading="eager" />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═══════════════════ SEÇÃO 2 — DIAGNÓSTICO ═══════════════════ */}
+      <section id="diagnostico">
+        <div className="container">
+
+          <div className="fade-up">
+            <div className="section-label">Diagnóstico · Leitura do sistema</div>
+            <h2>O time via churn.<br />Eu vi colapso de valor percebido.</h2>
+          </div>
+
+          <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
+            <p>O produto era uma assistência saúde de baixo ticket. O plano de entrada oferecia telemedicina por R$3,80. O plano mais completo, por R$10,80, adicionava desconto em farmácia e consultas presenciais. Contratação em um clique, primeiro mês grátis. O modelo facilitava a entrada — mas reduzia o nível de consciência na decisão.</p>
+          </div>
+
+          {/* Reframe */}
+          <div className="fade-up stagger-2">
+            <div className="reframe-block">
+              <p style={{ fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-dim)', marginBottom: '4px' }}>O reframe</p>
+              <h3>Esse não era um problema de interface. Era um problema de leitura de sistema.</h3>
+              <div className="reframe-vs">
+                <div className="reframe-side before">
+                  <div className="reframe-lbl before">Como o time via</div>
+                  <div className="reframe-txt">Churn alto → precisamos de iniciativas de retenção no final da jornada</div>
+                </div>
+                <div className="reframe-arrow">→</div>
+                <div className="reframe-side after">
+                  <div className="reframe-lbl after">Como eu li</div>
+                  <div className="reframe-txt">Churn é sintoma → o problema é o desalinhamento entre promessa e experiência de pós-venda</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="fade-up stagger-3" style={{ marginTop: '32px', maxWidth: '680px' }}>
+            <h3 style={{ marginBottom: '12px' }}>Como cheguei nessa leitura</h3>
+            <p>Entrei no produto sem histórico. Esse distanciamento foi uma vantagem: ao navegar pelo pós-venda pela primeira vez, minha reação imediata foi <em>"qual é a proposta de valor desse produto?"</em> Antes de levar qualquer hipótese para o time, contratei o produto e tentei utilizar cada benefício. Tive dificuldades reais. Isso confirmou que havia algo estruturalmente errado na experiência — não apenas na comunicação da oferta.</p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═══════════════════ SEÇÃO 3 — EVIDÊNCIAS ═══════════════════ */}
+      <section id="evidencias">
+        <div className="container">
+
+          <div className="fade-up">
+            <div className="section-label">Evidências · Validação em camadas</div>
+            <h2>Primeiro a direção.<br />Depois o investimento.</h2>
+          </div>
+
+          <div className="fade-up stagger-1" style={{ maxWidth: '640px', marginTop: '16px' }}>
+            <p>Estruturei a validação em duas camadas deliberadas: uma guerrilha rápida para ter direção antes de pedir recurso, e um teste estruturado aprovado pela liderança para confirmar e aprofundar.</p>
+          </div>
+
+          <div className="divider"></div>
+
+          {/* Camada 1 — Guerrilha */}
+          <div className="fade-up stagger-2">
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '16px' }}>
+              <h3>Camada 1 — Guerrilha</h3>
+              <span className="badge badge-bordô">5 usuários · Rápido · Direcionado</span>
+            </div>
+            <p style={{ maxWidth: '640px' }}>Abordei 5 pessoas com perfil de cliente PicPay e observei enquanto navegavam pela jornada de contratação e pós-venda no meu celular. O objetivo não era exploração aberta — era testar hipóteses específicas sobre o desalinhamento.</p>
+          </div>
+
+          {/* Hipóteses */}
+          <div className="fade-up stagger-3" style={{ marginTop: '24px' }}>
+            <div className="hip-row">
+              <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
+              <div className="hip-text"><strong>O pós-venda é confuso?</strong><span>Todos associaram "acionar seguro" à telemedicina — esse não era o caminho correto.</span></div>
+            </div>
+            <div className="hip-row">
+              <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
+              <div className="hip-text"><strong>O desconto farmácia é fácil de acessar?</strong><span>Nenhum usuário encontrou. Um fechou o app, foi ao Google e caiu na FAQ de um produto descontinuado.</span></div>
+            </div>
+            <div className="hip-row">
+              <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
+              <div className="hip-text"><strong>"Beneficiário" e "dependente" geram confusão?</strong><span>A interface priorizava quem recebe o seguro em falecimento — não quem usa os benefícios. Nenhum usuário distinguiu os dois.</span></div>
+            </div>
+            <div className="hip-row">
+              <div className="hip-status"><span className="badge badge-refutada">Refutada</span></div>
+              <div className="hip-text"><strong>Contratam o plano caro porque vem selecionado?</strong><span>Não — contratam pelo valor percebido no desconto farmácia frente à pequena diferença de preço.</span></div>
+            </div>
+            <div className="hip-row">
+              <div className="hip-status"><span className="badge badge-refutada">Refutada</span></div>
+              <div className="hip-text"><strong>O usuário diferencia "usar assistência" de "acionar seguro"?</strong><span>4 dos 5 testaram botões aleatoriamente até encontrar a telemedicina.</span></div>
+            </div>
+          </div>
+
+          {/* Quotes */}
+          <div className="fade-up stagger-4" style={{ marginTop: '8px' }}>
+            <div className="quote-block">
+              "Onde eu acho meu desconto farmácia? Achei que teria algum cupom aqui pra usar na farmácia."
+              <cite>Usuário durante guerrilha — comprou o produto por um benefício que não conseguia acessar</cite>
+            </div>
+            <div className="quote-block">
+              "Acionar seguro — isso é para caso eu tenha problemas na minha telemedicina?"
+              <cite>Usuário durante guerrilha — confusão entre linguagem securitária e produto de saúde cotidiana</cite>
+            </div>
+          </div>
+
+          {/* Fotos guerrilha */}
+          <div className="fade-up" style={{ marginTop: '28px' }}>
+            <div className="section-label">Bastidores — Guerrilha</div>
+            <div className="photo-grid-3">
+              <div className="photo-item tall">
+                <img src="/cases/assistencia-saude/roteiro-guerrilha.jpg" alt="Roteiro de hipóteses" loading="lazy" style={{ objectFit: 'cover', height: '100%' }} />
+                <div className="photo-caption">Roteiro de Hipóteses</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/notas-guerrilha.png" alt="Anotações ao vivo" loading="lazy" style={{ objectFit: 'cover', maxHeight: '240px', width: '100%' }} />
+                <div className="photo-caption">Anotações ao vivo</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/persona1.png" alt="Produto atual no teste" loading="lazy" style={{ objectFit: 'contain', maxHeight: '240px', background: '#f0ece6' }} />
+                <div className="photo-caption">Produto durante teste</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/persona2.png" alt="Participante 2" loading="lazy" style={{ objectFit: 'contain', maxHeight: '240px', background: '#f0ece6' }} />
+                <div className="photo-caption">Perfil de participante</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/persona3.png" alt="Participante 3" loading="lazy" style={{ objectFit: 'contain', maxHeight: '240px', background: '#f0ece6' }} />
+                <div className="photo-caption">Perfil de participante</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="divider"></div>
+
+          {/* Camada 2 — Pesquisa Estruturada */}
+          <div className="fade-up">
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '16px' }}>
+              <h3>Camada 2 — Pesquisa Estruturada</h3>
+              <span className="badge badge-dourado">10 participantes · 20 dias · Aprovado pela liderança</span>
+            </div>
+            <p style={{ maxWidth: '640px' }}>Com os sinais da guerrilha, apresentei para GPM, Head de Produto e PM. Mostrei que havia feito uma primeira rodada rápida para ter direção — e que precisava aumentar a amostragem para confirmar o desalinhamento como driver do churn. O time aprovou. Estruturei um plano de 20 dias dentro de uma janela de 30 dias disponível para implementação.</p>
+          </div>
+
+          {/* Timeline do plano */}
+          <div className="fade-up stagger-1" style={{ marginTop: '28px' }}>
+            <div className="section-label" style={{ marginBottom: '8px' }}>Plano de pesquisa — 20 dias</div>
+            <div className="timeline">
+              <div className="timeline-step">
+                <div className="timeline-circle">1</div>
+                <div className="timeline-content"><div className="timeline-title">Exploratório</div><div className="timeline-desc">Ampliar amostra da guerrilha</div></div>
+              </div>
+              <div className="timeline-step">
+                <div className="timeline-circle">2</div>
+                <div className="timeline-content"><div className="timeline-title">Proposta de UI</div><div className="timeline-desc">17/02 a 18/02</div></div>
+              </div>
+              <div className="timeline-step">
+                <div className="timeline-circle">3</div>
+                <div className="timeline-content"><div className="timeline-title">Recrutamento</div><div className="timeline-desc">20/02 a 21/02</div></div>
+              </div>
+              <div className="timeline-step">
+                <div className="timeline-circle">4</div>
+                <div className="timeline-content"><div className="timeline-title">Teste + Card Sorting</div><div className="timeline-desc">24/02 a 27/02</div></div>
+              </div>
+              <div className="timeline-step">
+                <div className="timeline-circle">5</div>
+                <div className="timeline-content"><div className="timeline-title">Report Final</div><div className="timeline-desc">28/02</div></div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3 camadas do teste */}
+          <div className="fade-up stagger-2" style={{ marginTop: '40px' }}>
+            <h3 style={{ marginBottom: '20px' }}>Três camadas sequenciais do teste</h3>
+            <div className="timeline-v">
+              <div className="timeline-v-item">
+                <div className="timeline-v-line-wrap"><div className="timeline-v-circle">1</div></div>
+                <div className="timeline-v-content">
+                  <div className="timeline-v-title">Produto atual — ampliar a amostra</div>
+                  <div className="timeline-v-desc">Garantir que os problemas identificados na guerrilha não eram artefato do teste anterior. Aumentar a base de evidência antes de propor solução.</div>
+                </div>
+              </div>
+              <div className="timeline-v-item">
+                <div className="timeline-v-line-wrap"><div className="timeline-v-circle">2</div></div>
+                <div className="timeline-v-content">
+                  <div className="timeline-v-title">Card sorting — hierarquia definida por comportamento real</div>
+                  <div className="timeline-v-desc">Entreguei cards com informações do pós-venda e pedi que os participantes organizassem da forma que fizesse mais sentido. 80% priorizaram consultas e desconto farmácia no topo. "Consulta online" venceu "telemedicina". Essas escolhas foram diretamente para a interface — não como sugestão, como decisão de produto.</div>
+                </div>
+              </div>
+              <div className="timeline-v-item">
+                <div className="timeline-v-line-wrap"><div className="timeline-v-circle">3</div></div>
+                <div className="timeline-v-content">
+                  <div className="timeline-v-title">Nova proposta — as mesmas tarefas que haviam falhado</div>
+                  <div className="timeline-v-desc">Participantes realizaram as mesmas tarefas do produto atual na nova interface. Encontraram o desconto farmácia. Conseguiram iniciar a telemedicina. Navegaram sem as dúvidas anteriores. O teste não apenas diagnosticou — validou que a solução funcionava.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Fotos card sorting */}
+          <div className="fade-up stagger-3" style={{ marginTop: '28px' }}>
+            <div className="section-label">Card Sorting — 10 participantes</div>
+            <div className="photo-grid-mixed">
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/card-sorting.jpeg" alt="Sessão com moderação" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
+                <div className="photo-caption">Sessão com GPM e PM como observadores</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/card-sorting2.jpeg" alt="Organização dos cards" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
+                <div className="photo-caption">Organização inicia dos cards</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/card-sorting3.jpeg" alt="Resultado do sorting" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
+                <div className="photo-caption">Cards organizados — resultado</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/card-sorting4.jpeg" alt="Moderação ao vivo" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
+                <div className="photo-caption">Moderação ao vivo</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/card-sorting5.jpeg" alt="Resultado 2" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
+                <div className="photo-caption">Resultado — participante 2</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/card-sorting6.jpeg" alt="Padrão confirmado" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
+                <div className="photo-caption">Padrão confirmado entre participantes</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═══════════════════ SEÇÃO 4 — SOLUÇÃO ═══════════════════ */}
+      <section id="solucao">
+        <div className="container">
+
+          <div className="fade-up">
+            <div className="section-label">Solução · Decisões de projeto</div>
+            <h2>Não foi um redesign.<br />Foi uma decisão sobre o que era possível mudar.</h2>
+          </div>
+
+          <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
+            <p>O produto operava com processos definidos pela seguradora parceira. Partir dessa clareza foi o que evitou que eu investisse tempo em soluções inviáveis — e direcionou o foco para a camada onde era possível gerar impacto real.</p>
+          </div>
+
+          {/* Restrições */}
+          <div className="fade-up stagger-2" style={{ marginTop: '32px' }}>
+            <h3 style={{ marginBottom: '16px' }}>Restrições que definiram o escopo</h3>
+            <div className="grid-2">
+              <div className="card card-neutral">
+                <div style={{ fontSize: '22px', marginBottom: '12px' }}>💊</div>
+                <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Desconto farmácia</h3>
+                <p style={{ fontSize: '14px' }}>Continuaria sendo acessado fora da plataforma. Fluxo definido pela seguradora parceira.</p>
+              </div>
+              <div className="card card-neutral">
+                <div style={{ fontSize: '22px', marginBottom: '12px' }}>💬</div>
+                <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Telemedicina</h3>
+                <p style={{ fontSize: '14px' }}>Continuaria sendo iniciada via WhatsApp. Canal definido pela parceira.</p>
+              </div>
+              <div className="card card-neutral">
+                <div style={{ fontSize: '22px', marginBottom: '12px' }}>📋</div>
+                <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Cadastro de dependentes</h3>
+                <p style={{ fontSize: '14px' }}>Continuaria dependendo de contato telefônico.</p>
+              </div>
+              <div className="card card-neutral">
+                <div style={{ fontSize: '22px', marginBottom: '12px' }}>🎨</div>
+                <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Design system legado</h3>
+                <p style={{ fontSize: '14px' }}>Decisão intencional: construir no sistema existente acelerava a implementação. Velocidade pesou mais que perfeição técnica.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Decisão estratégica */}
+          <div className="fade-up stagger-3" style={{ marginTop: '32px', maxWidth: '680px' }}>
+            <div className="card card-bordô">
+              <div className="section-label" style={{ marginBottom: '8px' }}>A decisão estratégica</div>
+              <p>Se não posso mudar o processo, garanto que o usuário sabe o que vai acontecer em cada etapa. Para cada benefício, o esqueleto informativo foi o mesmo:</p>
+              <div className="pill-row" style={{ marginTop: '12px' }}>
+                <span className="pill">Como funciona?</span>
+                <span className="pill">Onde encontro?</span>
+                <span className="pill">O que fazer agora?</span>
+                <span className="pill">O que acontece depois?</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Before / After */}
+          <div className="fade-up stagger-4" style={{ marginTop: '40px' }}>
+            <h3 style={{ marginBottom: '8px' }}>O que mudou — antes e depois</h3>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '0' }}>Da lógica do produto para a lógica do uso.</p>
+            <div className="before-after">
+              <div className="before-side">
+                <div className="ba-label before">Antes — Lógica do produto</div>
+                <div className="ba-item">📁 Usar assistência</div>
+                <div className="ba-item">🔔 Acionar seguro</div>
+                <div className="ba-item">👤 Beneficiários do seguro</div>
+                <div className="ba-item">⋯ Mais opções</div>
+                <p style={{ fontSize: '12px', marginTop: '14px', color: 'var(--text-dim)' }}>O usuário precisava entender a estrutura do produto para navegar.</p>
+              </div>
+              <div className="after-side">
+                <div className="ba-label after">Depois — Lógica do uso</div>
+                <div className="ba-item">🩺 Consulta online</div>
+                <div className="ba-item">🏥 Consulta presencial</div>
+                <div className="ba-item">💊 Desconto farmácia</div>
+                <div className="ba-item">👨‍👩‍👧 Dependentes</div>
+                <p style={{ fontSize: '12px', marginTop: '14px', color: 'var(--text-dim)' }}>Hierarquia validada pelo card sorting. O usuário encontra pelo que quer fazer.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Fotos AS IS / TO BE */}
+          <div className="fade-up" style={{ marginTop: '32px' }}>
+            <div className="photo-grid-2">
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/IS-TOBE-hub.png" alt="Hub pós-venda AS IS vs TO BE" loading="lazy" style={{ objectFit: 'contain', maxHeight: '400px', background: '#f5f5f5' }} />
+                <div className="photo-caption">Hub de pós-venda — AS IS vs TO BE</div>
+              </div>
+              <div className="photo-item">
+                <img src="/cases/assistencia-saude/IS-TOBE-Beneficios.png" alt="Benefícios AS IS vs TO BE" loading="lazy" style={{ objectFit: 'contain', maxHeight: '400px', background: '#f5f5f5' }} />
+                <div className="photo-caption">Uso de benefícios — AS IS vs TO BE</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═══════════════════ SEÇÃO 5 — IMPACTO ═══════════════════ */}
+      <section id="impacto">
+        <div className="container">
+
+          <div className="fade-up">
+            <div className="section-label">Influência · Alinhamento organizacional</div>
+            <h2>Não apresentei dados.<br />Fiz o time ver o problema.</h2>
+          </div>
+
+          <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
+            <p>A mudança de direção não foi resultado só de uma análise bem feita. Foi resultado de um processo deliberado de construção de evidência compartilhada. Mapeei quem precisava ser influenciado e o que movia cada um — cada abordagem foi diferente.</p>
+          </div>
+
+          {/* Mapa de influência */}
+          <div className="fade-up stagger-2">
+            <div className="influence-grid">
+              <div className="influence-card">
+                <div className="influence-who">👥 GPM e PM</div>
+                <div className="influence-need">Precisavam ver ao vivo</div>
+                <div className="influence-how">Convidei o GPM e a PM para estarem na sala como ouvintes. Os insights chegaram diretamente — não filtrados por relatório. Isso eliminou a distância entre o problema e a decisão.</div>
+              </div>
+              <div className="influence-card">
+                <div className="influence-who">🤔 Liderança cética</div>
+                <div className="influence-need">Em vez de argumentar, convidei para ver</div>
+                <div className="influence-how">Uma liderança de outro time não acreditava que a solução traria ganhos reais. Quando viu as dúvidas dos usuários ao vivo, a posição mudou. A fala foi direta: "não havia dimensionado o quanto aquela agenda seria rica."</div>
+              </div>
+              <div className="influence-card">
+                <div className="influence-who">⚡ CTO</div>
+                <div className="influence-need">A evidência falou por si</div>
+                <div className="influence-how">Quando questionou a priorização do redesign, a resposta foi o material completo — da guerrilha ao teste estruturado. Depois de ler, não havia mais questionamento.</div>
+              </div>
+              <div className="influence-card">
+                <div className="influence-who">📊 Além do escopo</div>
+                <div className="influence-need">Infraestrutura de dados</div>
+                <div className="influence-how">As telas não tinham tracking. Aproveitei a janela para resolver isso. O que antes era uma tela sem rastreabilidade se tornou três telas com tracking próprio. O time passou a ter visibilidade de comportamento onde antes havia ausência total de dado.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Segundo driver */}
+          <div className="fade-up stagger-3" style={{ marginTop: '40px' }}>
+            <div className="card card-dourado">
+              <div className="section-label" style={{ marginBottom: '8px', color: 'var(--dourado)' }}>
+                Um driver identificado — e a decisão consciente de não agir agora
+              </div>
+              <p style={{ marginTop: '8px' }}>Durante o processo, identifiquei um segundo driver relevante: <strong>baixa consciência de contratação</strong>. A combinação de primeiro mês grátis e contratação em um clique facilitava a entrada — mas parte do churn vinha de usuários que cancelavam sem saber que tinham o produto.</p>
+              <p style={{ marginTop: '12px' }}>Esse achado foi levado aos stakeholders. A decisão foi consciente: mesmo com esse driver identificado, o modelo de entrada compensava financeiramente. O driver não foi ignorado — entrou em backlog como hipótese para testes futuros. <strong>A decisão de não agir agora foi informada, não omissa.</strong></p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═══════════════════ SEÇÃO 6 — RESULTADO ═══════════════════ */}
+      <section id="resultado">
+        <div className="container">
+
+          <div className="fade-up">
+            <div className="section-label">Resultado · Aprendizados</div>
+            <h2>0,97 p.p. de redução.<br />5 mil apólices preservadas.</h2>
+          </div>
+
+          {/* Métricas */}
+          <div className="fade-up stagger-1">
+            <div className="result-grid">
+              <div className="result-card">
+                <div className="result-num">↓ 0,97 p.p.</div>
+                <div className="result-label">Churn reduzido</div>
+                <div className="result-desc">Em relação ao patamar inicial de 16%</div>
+              </div>
+              <div className="result-card">
+                <div className="result-num">~5 mil</div>
+                <div className="result-label">Apólices preservadas</div>
+                <div className="result-desc">Equivalente a R$50k em receita</div>
+              </div>
+              <div className="result-card">
+                <div className="result-num">100%</div>
+                <div className="result-label">Dores sanadas</div>
+                <div className="result-desc">Das mapeadas na guerrilha, todas foram resolvidas na nova interface</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Nota de calibração */}
+          <div className="fade-up stagger-2" style={{ marginTop: '24px', maxWidth: '640px' }}>
+            <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--text-dim)', borderLeft: '2px solid var(--border)', paddingLeft: '16px' }}>Não é possível atribuir integralmente esse resultado às mudanças realizadas. O contexto envolvia múltiplas variáveis. Dois tipos de evidência sustentam a correlação: quantitativa — a redução coincidiu diretamente com as mudanças — e qualitativa — todas as dores mapeadas foram sanadas no teste estruturado.</p>
+          </div>
+
+          <div className="divider"></div>
+
+          {/* Aprendizados */}
+          <div className="fade-up stagger-3">
+            <h3 style={{ marginBottom: '20px' }}>Aprendizados</h3>
+            <div className="aprendizado-item">
+              <div className="aprendizado-num">01</div>
+              <div>
+                <div className="aprendizado-title">O processo não é linear — reconhecer isso em tempo real é uma habilidade</div>
+                <div className="aprendizado-desc">Decidi encaixar o card sorting no teste já planejado não porque estava no roteiro, mas porque havia uma dúvida real que precisava de dado. Essa decisão mudou a interface. Processo bem executado não é sequência — é leitura contínua do que ainda está em aberto.</div>
+              </div>
+            </div>
+            <div className="aprendizado-item">
+              <div className="aprendizado-num">02</div>
+              <div>
+                <div className="aprendizado-title">A primeira versão é hipótese, não solução</div>
+                <div className="aprendizado-desc">Construí a primeira proposta com base nos insights da guerrilha. Depois do card sorting, revisei nomenclaturas. Depois do teste, a linguagem mudou novamente — os participantes chamavam o produto de "plano de saúde". Cada camada trouxe uma correção. Quem fecha o ciclo cedo demais perde essas correções.</div>
+              </div>
+            </div>
+            <div className="aprendizado-item">
+              <div className="aprendizado-num">03</div>
+              <div>
+                <div className="aprendizado-title">Influenciar não é apresentar — é fazer as pessoas verem</div>
+                <div className="aprendizado-desc">Cada stakeholder precisava de uma abordagem diferente. Nenhuma foi igual. Todas foram intencionais. O resultado foi que nenhuma das melhorias precisou ser justificada depois — porque todos que precisavam decidir já haviam visto o problema de perto.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Próximos cases */}
+          <div className="fade-up stagger-4" style={{ marginTop: '56px', paddingTop: '40px', borderTop: '1px solid var(--border)' }}>
+            <h3 style={{ marginBottom: '20px', color: 'var(--text-dim)' }}>Próximos cases</h3>
+            <div style={{ maxWidth: '360px' }}>
+              <div className="card" style={{ opacity: 0.6 }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-dim)', marginBottom: '8px' }}>TOTVS TECHFIN</div>
+                <div style={{ fontFamily: "'Raleway',sans-serif", fontSize: '16px', fontWeight: 700, color: 'var(--text-dim)' }}>Em breve</div>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: '13px', color: 'var(--text-dim)', marginTop: '6px' }}>84% de redução de chamados por dúvida</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </>
   )
 }
