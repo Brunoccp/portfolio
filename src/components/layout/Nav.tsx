@@ -16,13 +16,15 @@ export default function Nav() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-sm border-b border-[#1f1f1f]' : ''
+        scrolled
+          ? 'bg-[#FAFAF8]/95 backdrop-blur-sm border-b border-[rgba(0,0,0,0.08)]'
+          : ''
       }`}
     >
       <nav className="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
         <Link
           to="/"
-          className="text-[#f0f0f0] text-sm font-medium tracking-wide hover:text-white transition-colors"
+          className="font-display font-bold text-sm tracking-wide text-[#7F1D1D] hover:text-[#6b1818] transition-colors"
         >
           Bruno Almeida
         </Link>
@@ -32,36 +34,36 @@ export default function Nav() {
             <>
               <a
                 href="#about"
-                className="text-[#888888] text-sm hover:text-[#f0f0f0] transition-colors"
+                className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
               >
-                About
+                Sobre
               </a>
               <a
                 href="#work"
-                className="text-[#888888] text-sm hover:text-[#f0f0f0] transition-colors"
+                className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
               >
                 Work
               </a>
               <a
                 href="mailto:brunoccp2@gmail.com"
-                className="text-[#888888] text-sm hover:text-[#f0f0f0] transition-colors"
+                className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
               >
-                Contact
+                Contato
               </a>
             </>
           ) : (
             <>
               <Link
                 to="/"
-                className="text-[#888888] text-sm hover:text-[#f0f0f0] transition-colors"
+                className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
               >
                 Work
               </Link>
               <a
                 href="mailto:brunoccp2@gmail.com"
-                className="text-[#888888] text-sm hover:text-[#f0f0f0] transition-colors"
+                className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
               >
-                Contact
+                Contato
               </a>
             </>
           )}

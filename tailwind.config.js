@@ -8,17 +8,52 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Georgia', 'Times New Roman', 'serif'],
+        display: ['Raleway', 'system-ui', '-apple-system', 'sans-serif'],
       },
+      // ─── Portfolio custom colors (used with arbitrary values in components) ───
       colors: {
-        'bg': '#0a0a0a',
-        'bg-secondary': '#111111',
-        'bg-card': '#141414',
-        'border': '#1f1f1f',
-        'text-primary': '#f0f0f0',
-        'text-secondary': '#888888',
-        'text-muted': '#555555',
-        'accent': '#f0f0f0',
+        // Portfolio brand colors
+        bordo: '#7F1D1D',
+        dourado: '#92712A',
+        // shadcn/ui CSS-variable tokens
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
+        },
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       letterSpacing: {
         'widest-2': '0.2em',

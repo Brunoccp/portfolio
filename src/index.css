@@ -2,6 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design tokens ─── */
+:root {
+  --font-size: 16px;
+  --background: #FAFAF8;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #7F1D1D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F4F0;
+  --secondary-foreground: #1A1A1A;
+  --muted: #F5F4F0;
+  --muted-foreground: #6B6B6B;
+  --accent: #92712A;
+  --accent-foreground: #FFFFFF;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: transparent;
+  --input-background: #F5F4F0;
+  --switch-background: #D1D1D1;
+  --ring: #7F1D1D;
+  --radius: 0.625rem;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* Brand */
+  --bordo: #7F1D1D;
+  --dourado: #92712A;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -12,16 +48,16 @@
   }
 
   body {
-    background-color: #0a0a0a;
-    color: #f0f0f0;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background-color: #f0f0f0;
-    color: #0a0a0a;
+    background-color: #7F1D1D;
+    color: #ffffff;
   }
 }
 
@@ -32,6 +68,10 @@
 
   .fade-in-up {
     animation: fadeInUp 0.7s ease-out both;
+  }
+
+  .font-display {
+    font-family: 'Raleway', system-ui, -apple-system, sans-serif;
   }
 }
 

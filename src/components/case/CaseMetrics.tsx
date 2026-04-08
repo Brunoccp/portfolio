@@ -10,19 +10,19 @@ interface CaseMetricsProps {
 
 export default function CaseMetrics({ metrics, note }: CaseMetricsProps) {
   return (
-    <section className="px-6 md:px-12 py-20 md:py-28 border-t border-[#1f1f1f]">
+    <section className="px-6 md:px-12 py-20 md:py-28 border-t border-[rgba(0,0,0,0.08)]">
       <div className="max-w-6xl mx-auto">
-        <span className="text-[#555555] text-xs tracking-widest uppercase block mb-16">
-          Results
+        <span className="text-[#6B6B6B] text-xs tracking-[0.15em] uppercase font-semibold block mb-16">
+          Resultados
         </span>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-12">
           {metrics.map((metric) => (
-            <div key={metric.value} className="flex flex-col gap-4">
-              <span className="text-4xl md:text-5xl font-light text-[#f0f0f0] tracking-tight leading-none">
+            <div key={metric.value} className="flex flex-col gap-3">
+              <span className="font-display font-black text-5xl md:text-6xl text-[#92712A] leading-none tracking-tight">
                 {metric.value}
               </span>
-              <p className="text-[#888888] text-sm leading-relaxed">
+              <p className="text-[#6B6B6B] text-sm leading-relaxed">
                 {metric.description}
               </p>
             </div>
@@ -30,9 +30,11 @@ export default function CaseMetrics({ metrics, note }: CaseMetricsProps) {
         </div>
 
         {note && (
-          <p className="text-[#555555] text-xs leading-relaxed max-w-2xl border-t border-[#1f1f1f] pt-8">
-            {note}
-          </p>
+          <div className="border-t border-[rgba(0,0,0,0.08)] pt-8">
+            <p className="text-[#6B6B6B] text-xs leading-relaxed max-w-2xl italic">
+              {note}
+            </p>
+          </div>
         )}
       </div>
     </section>
