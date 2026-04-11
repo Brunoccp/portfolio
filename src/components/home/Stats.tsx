@@ -1,39 +1,60 @@
-const stats = [
-  {
-    value: '↓ 0,97 p.p.',
-    label: 'Redução de churn',
-    description: 'Preservando ~5 mil apólices no PicPay',
-  },
-  {
-    value: '84%',
-    label: 'Redução de chamados',
-    description: 'Por dúvida na TOTVS TECHFIN',
-  },
-  {
-    value: '8+',
-    label: 'Anos',
-    description: 'Construindo produtos em fintech, pagamentos e saúde',
-  },
-]
-
 export default function Stats() {
   return (
-    <section className="px-6 md:px-12 py-20 border-t border-[rgba(0,0,0,0.08)]">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-          {stats.map((stat) => (
-            <div key={stat.value} className="flex flex-col gap-2">
-              <span className="font-display font-black text-5xl md:text-6xl text-[#7F1D1D] leading-none tracking-tight">
-                {stat.value}
+    <section className="py-20 bg-[#7F1D1D]">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
+
+          {/* Experiência — destaque principal */}
+          <div className="flex flex-col gap-8">
+            <span className="inline-flex self-start items-center px-3 py-1 rounded-full border border-[rgba(255,255,255,0.3)] text-white text-[10px] font-semibold tracking-[0.12em] uppercase">
+              Experiência
+            </span>
+            <div className="flex flex-col gap-2">
+              <span className="font-display font-black text-5xl md:text-6xl text-white leading-none tracking-tight">
+                8+
               </span>
-              <p className="text-[#1A1A1A] text-xs font-semibold tracking-[0.1em] uppercase mt-2">
-                {stat.label}
+              <p className="text-[rgba(255,255,255,0.6)] text-xs font-semibold tracking-[0.1em] uppercase mt-2">
+                Anos
               </p>
-              <p className="text-[#6B6B6B] text-sm leading-relaxed">
-                {stat.description}
+              <p className="text-[rgba(255,255,255,0.7)] text-sm leading-relaxed">
+                Sendo 4 anos em projetos complexos e 4 anos construindo produtos em fintechs
               </p>
             </div>
-          ))}
+          </div>
+
+          {/* Resultados selecionados */}
+          <div className="md:col-span-2 flex flex-col gap-8">
+            <span className="inline-flex self-start items-center px-3 py-1 rounded-full border border-[rgba(255,255,255,0.3)] text-white text-[10px] font-semibold tracking-[0.12em] uppercase">
+              Resultados selecionados
+            </span>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div className="flex flex-col gap-2">
+                <span className="font-display font-black text-5xl md:text-6xl text-white leading-none tracking-tight">
+                  ↓ 0,97 p.p.
+                </span>
+                <p className="text-[rgba(255,255,255,0.6)] text-xs font-semibold tracking-[0.1em] uppercase mt-2">
+                  Redução de churn
+                </p>
+                <p className="text-[rgba(255,255,255,0.7)] text-sm leading-relaxed">
+                  Preservando ~5 mil apólices no PicPay
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <span className="font-display font-black text-5xl md:text-6xl text-white leading-none tracking-tight">
+                  84%
+                </span>
+                <p className="text-[rgba(255,255,255,0.6)] text-xs font-semibold tracking-[0.1em] uppercase mt-2">
+                  Redução de chamados
+                </p>
+                <p className="text-[rgba(255,255,255,0.7)] text-sm leading-relaxed">
+                  Por dúvida na TOTVS TECHFIN
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

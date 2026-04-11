@@ -129,11 +129,11 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
 
 export default function CaseGrid() {
   return (
-    <section id="work" className="px-6 md:px-12 py-24 md:py-32 border-t border-[rgba(0,0,0,0.08)]">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-16">
+    <section id="work" className="py-12 md:py-16 border-t border-[rgba(0,0,0,0.08)]">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <div className="flex items-center justify-between mb-10">
           <span className="text-[#6B6B6B] text-xs tracking-[0.15em] uppercase font-semibold">
-            Work
+            Cases
           </span>
         </div>
 
