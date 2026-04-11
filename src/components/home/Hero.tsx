@@ -63,7 +63,7 @@ export default function Hero() {
           >
             <div className="aspect-[4/5] w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-2xl bg-[#F5F4F0]">
               <img
-                src="/bruno-almeida.jpg"
+                src="/bruno-almeida-2.jpeg"
                 alt="Bruno Almeida"
                 className="w-full h-full object-cover"
               />
