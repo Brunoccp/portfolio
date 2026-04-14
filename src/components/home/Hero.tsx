@@ -10,14 +10,14 @@ export default function Hero() {
           <div className="order-1 lg:order-1 mt-5 lg:mt-0">
             {/* Eyebrow */}
             <span
-              className="inline-flex self-start items-center px-3 py-1 rounded-full border border-[rgba(127,29,29,0.25)] text-[#7F1D1D] text-[10px] font-semibold tracking-[0.12em] uppercase mb-6 fade-in-up"
+              className="inline-flex self-start items-center px-3 py-1 rounded-full border border-[rgba(110,232,64,0.3)] text-[#6EE840] text-[10px] font-semibold tracking-[0.12em] uppercase mb-6 fade-in-up"
             >
               Product Designer · São Paulo
             </span>
 
             {/* Headline */}
             <h1
-              className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-[#1A1A1A] leading-[1.05] tracking-[-0.02em] mb-8 fade-in-up"
+              className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-white leading-[1.05] tracking-[-0.02em] mb-8 fade-in-up"
               style={{ animationDelay: '0.05s' }}
             >
               Olá, me chamo Bruno!
@@ -25,7 +25,7 @@ export default function Hero() {
 
             {/* Subtitle */}
             <p
-              className="text-[#6B6B6B] text-base md:text-lg leading-relaxed mb-6 md:mb-12 max-w-lg fade-in-up"
+              className="text-[rgba(255,255,255,0.55)] text-base md:text-lg leading-relaxed mb-6 md:mb-12 max-w-lg fade-in-up"
               style={{ animationDelay: '0.1s' }}
             >
               Product Designer com foco na construção de produtos em ambientes
@@ -42,7 +42,7 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/almeida-bruno/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#7F1D1D] text-white px-6 py-3 text-sm font-medium rounded hover:bg-[#6b1818] transition-colors"
+                className="inline-flex items-center gap-2 bg-[#6EE840] text-[#0D0D0D] px-6 py-3 text-sm font-semibold rounded hover:bg-[#8FF563] transition-colors"
               >
                 LinkedIn →
               </a>
@@ -51,7 +51,7 @@ export default function Hero() {
                 href="https://wa.me/5511933794008"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
+                className="inline-flex items-center gap-2 text-[rgba(255,255,255,0.5)] text-sm hover:text-white transition-colors"
               >
                 Fale comigo
               </a>
@@ -63,7 +63,7 @@ export default function Hero() {
             className="order-2 lg:order-2 mb-5 lg:mb-0 fade-in"
             style={{ animationDelay: '0.15s' }}
           >
-            <div className="aspect-square lg:aspect-[4/5] w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-2xl bg-[#F5F4F0]">
+            <div className="aspect-square w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-2xl bg-[#161616]">
               <img
                 src="/bruno-almeida-2.jpeg"
                 alt="Bruno Almeida"

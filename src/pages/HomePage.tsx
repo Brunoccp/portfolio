@@ -6,7 +6,7 @@ import CaseGrid from '../components/home/CaseGrid'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
+    <div className="min-h-screen bg-[#0D0D0D]">
       <Nav />
       <main>
         <Hero />

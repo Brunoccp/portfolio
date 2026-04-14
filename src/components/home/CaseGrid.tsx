@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
-const GLOW_COLOR = '127, 29, 29'
+const GLOW_COLOR = '110, 232, 64'
 
 interface BentoCaseCard {
   company: string
@@ -55,15 +55,15 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
       onMouseMove={card.comingSoon ? undefined : handleMouseMove}
       onMouseEnter={() => !card.comingSoon && setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`relative overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] bg-white p-8 md:p-10 h-full transition-all duration-300 ${
+      className={`relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.08)] p-8 md:p-10 h-full transition-all duration-300 ${
         card.comingSoon
-          ? 'opacity-50 cursor-default'
-          : 'cursor-pointer hover:border-[rgba(127,29,29,0.2)] hover:shadow-lg'
+          ? 'opacity-40 cursor-default'
+          : 'cursor-pointer hover:border-[rgba(110,232,64,0.25)] hover:shadow-lg'
       }`}
       style={{
         background: hovered
-          ? `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(${GLOW_COLOR}, 0.06) 0%, #FFFFFF 60%)`
-          : '#FFFFFF',
+          ? `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(${GLOW_COLOR}, 0.07) 0%, #161616 60%)`
+          : '#161616',
       }}
     >
       {/* Glow border overlay */}
@@ -71,7 +71,7 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{
-            background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(${GLOW_COLOR}, 0.15) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(${GLOW_COLOR}, 0.12) 0%, transparent 60%)`,
           }}
         />
       )}
@@ -79,22 +79,22 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
       <div className="relative z-10 flex flex-col h-full">
         {/* Label */}
         <div className="flex items-center gap-2 mb-6">
-          <span className="text-[#7F1D1D] text-xs font-semibold tracking-[0.12em] uppercase">
+          <span className="text-[#6EE840] text-xs font-semibold tracking-[0.12em] uppercase">
             {card.company} · {card.context}
           </span>
           {card.readTime && (
-            <span className="text-[#6B6B6B] text-xs">· {card.readTime}</span>
+            <span className="text-[rgba(255,255,255,0.4)] text-xs">· {card.readTime}</span>
           )}
         </div>
 
         {/* Title */}
-        <h2 className="font-display font-bold text-xl md:text-2xl text-[#1A1A1A] leading-snug tracking-tight mb-4">
+        <h2 className="font-display font-bold text-xl md:text-2xl text-white leading-snug tracking-tight mb-4">
           {card.title}
         </h2>
 
         {/* Description (large card only) */}
         {card.description && (
-          <p className="text-[#6B6B6B] text-sm leading-relaxed mb-6 max-w-md">
+          <p className="text-[rgba(255,255,255,0.55)] text-sm leading-relaxed mb-6 max-w-md">
             {card.description}
           </p>
         )}
@@ -105,7 +105,7 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
             {card.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[#6B6B6B] text-xs border border-[rgba(0,0,0,0.1)] rounded-full px-3 py-1"
+                className="text-[rgba(255,255,255,0.5)] text-xs border border-[rgba(255,255,255,0.1)] rounded-full px-3 py-1"
               >
                 {tag}
               </span>
@@ -115,7 +115,7 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
 
         {/* Arrow link */}
         {!card.comingSoon && (
-          <div className="mt-auto flex items-center gap-2 text-[#7F1D1D] text-sm font-medium group-hover:gap-3 transition-all">
+          <div className="mt-auto flex items-center gap-2 text-[#6EE840] text-sm font-medium group-hover:gap-3 transition-all">
             Ver case →
           </div>
         )}
@@ -129,10 +129,10 @@ function GlowCard({ card }: { card: BentoCaseCard }) {
 
 export default function CaseGrid() {
   return (
-    <section id="work" className="py-12 md:py-16 border-t border-[rgba(0,0,0,0.08)]">
+    <section id="work" className="py-12 md:py-16 border-t border-[rgba(255,255,255,0.08)]">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between mb-10">
-          <span className="text-[#6B6B6B] text-xs tracking-[0.15em] uppercase font-semibold">
+          <span className="text-[rgba(255,255,255,0.4)] text-xs tracking-[0.15em] uppercase font-semibold">
             Cases
           </span>
         </div>

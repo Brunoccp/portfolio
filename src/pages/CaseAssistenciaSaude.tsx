@@ -1,28 +1,28 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Pill, Video, Users, Layers, Users2, Eye, Zap, DatabaseZap, Folder, Bell, User, MoreHorizontal, Stethoscope, Building2 } from 'lucide-react'
 
 const caseCss = `
 /* ── TOKENS ── */
 :root {
-  --bg:         #FAFAF8;
-  --bg-card:    #FFFFFF;
-  --bg-card-alt:#F5F2EE;
-  --text:       #1A1A1A;
-  --text-muted: #6B6B6B;
-  --text-dim:   #9E9E9E;
-  --bordô:      #7F1D1D;
-  --bordô-light:#A52828;
-  --bordô-bg:   rgba(127,29,29,0.06);
-  --bordô-border:rgba(127,29,29,0.18);
-  --dourado:    #92712A;
-  --dourado-light:#B8962E;
-  --dourado-bg: rgba(146,113,42,0.07);
-  --dourado-border:rgba(146,113,42,0.22);
-  --border:     rgba(0,0,0,0.07);
-  --shadow:     0 2px 16px rgba(0,0,0,0.06);
-  --shadow-md:  0 8px 32px rgba(0,0,0,0.10);
-  --shadow-lg:  0 20px 60px rgba(0,0,0,0.12);
+  --bg:         #0D0D0D;
+  --bg-card:    #161616;
+  --bg-card-alt:#1C1C1C;
+  --text:       #FFFFFF;
+  --text-muted: rgba(255,255,255,0.55);
+  --text-dim:   rgba(255,255,255,0.35);
+  --bordô:      #6EE840;
+  --bordô-light:#8FF563;
+  --bordô-bg:   rgba(110,232,64,0.06);
+  --bordô-border:rgba(110,232,64,0.18);
+  --dourado:    #6EE840;
+  --dourado-light:#8FF563;
+  --dourado-bg: rgba(110,232,64,0.07);
+  --dourado-border:rgba(110,232,64,0.20);
+  --border:     rgba(255,255,255,0.08);
+  --shadow:     0 2px 16px rgba(0,0,0,0.3);
+  --shadow-md:  0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg:  0 20px 60px rgba(0,0,0,0.5);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -35,7 +35,7 @@ p { font-size: 16px; line-height: 1.75; color: var(--text-muted); font-family: '
 .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.10em; color: var(--text-dim); margin-top: 8px; font-family: 'Inter', sans-serif; }
 
 /* ── NAV ── */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: rgba(250,250,248,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: rgba(13,13,13,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
 nav.scrolled { box-shadow: var(--shadow); }
 .nav-left { display: flex; align-items: center; gap: 20px; }
 .nav-back { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--text-dim); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
@@ -89,7 +89,7 @@ section { min-height: 100vh; padding: 120px 64px 80px; display: flex; flex-direc
 .timeline { display: flex; align-items: flex-start; position: relative; margin-top: 40px; }
 .timeline-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
 .timeline-step:not(:last-child)::after { content: ''; position: absolute; top: 20px; left: 50%; width: 100%; height: 2px; background: linear-gradient(90deg, var(--bordô), rgba(127,29,29,0.08)); }
-.timeline-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--bordô); display: flex; align-items: center; justify-content: center; font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 800; color: #FAFAF8; position: relative; z-index: 1; box-shadow: 0 0 0 6px rgba(127,29,29,0.10); }
+.timeline-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--bordô); display: flex; align-items: center; justify-content: center; font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 800; color: #0D0D0D; position: relative; z-index: 1; box-shadow: 0 0 0 6px rgba(110,232,64,0.10); }
 .timeline-content { margin-top: 16px; padding: 0 8px; }
 .timeline-title { font-family: 'Raleway', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
 .timeline-desc { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
@@ -150,7 +150,7 @@ section { min-height: 100vh; padding: 120px 64px 80px; display: flex; flex-direc
 /* ── RESULTADO METRICS ── */
 .result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 32px; }
 .result-card { background: var(--bg-card); border: 1px solid var(--dourado-border); border-radius: 16px; padding: 32px 24px; text-align: center; box-shadow: var(--shadow); }
-.result-num { font-family: 'Raleway', sans-serif; font-size: clamp(36px,4vw,56px); font-weight: 900; letter-spacing: -0.03em; color: var(--bordô); line-height: 1; }
+.result-num { font-family: 'Inter', sans-serif; font-size: clamp(24px,2.8vw,36px); font-weight: 900; letter-spacing: -0.03em; color: var(--bordô); line-height: 1; }
 .result-label { font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); margin-top: 10px; margin-bottom: 6px; }
 .result-desc { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
@@ -380,7 +380,7 @@ export default function CaseAssistenciaSaude() {
 
           {/* Stats */}
           <div className="stat-grid fade-up stagger-3">
-            <div><div className="stat-num">16%</div><div className="stat-label">Churn inicial</div></div>
+            <div><div className="stat-num" style={{ color: 'var(--text)' }}>16%</div><div className="stat-label">Churn inicial</div></div>
             <div><div className="stat-num">↓ 0,97 p.p.</div><div className="stat-label">Redução após mudanças</div></div>
             <div><div className="stat-num">~5 mil</div><div className="stat-label">Apólices preservadas</div></div>
             <div><div className="stat-num">R$50k</div><div className="stat-label">Receita preservada</div></div>
@@ -685,22 +685,22 @@ export default function CaseAssistenciaSaude() {
             <h3 style={{ marginBottom: '16px' }}>Restrições que definiram o escopo</h3>
             <div className="grid-2">
               <div className="card card-neutral">
-                <div style={{ fontSize: '22px', marginBottom: '12px' }}>💊</div>
+                <div style={{ marginBottom: '12px' }}><Pill size={20} color="var(--bordô)" /></div>
                 <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Desconto farmácia</h3>
                 <p style={{ fontSize: '14px' }}>Continuaria sendo acessado fora da plataforma. Fluxo definido pela seguradora parceira.</p>
               </div>
               <div className="card card-neutral">
-                <div style={{ fontSize: '22px', marginBottom: '12px' }}>💬</div>
+                <div style={{ marginBottom: '12px' }}><Video size={20} color="var(--bordô)" /></div>
                 <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Telemedicina</h3>
                 <p style={{ fontSize: '14px' }}>Continuaria sendo iniciada via WhatsApp. Canal definido pela parceira.</p>
               </div>
               <div className="card card-neutral">
-                <div style={{ fontSize: '22px', marginBottom: '12px' }}>📋</div>
+                <div style={{ marginBottom: '12px' }}><Users size={20} color="var(--bordô)" /></div>
                 <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Cadastro de dependentes</h3>
                 <p style={{ fontSize: '14px' }}>Continuaria dependendo de contato telefônico.</p>
               </div>
               <div className="card card-neutral">
-                <div style={{ fontSize: '22px', marginBottom: '12px' }}>🎨</div>
+                <div style={{ marginBottom: '12px' }}><Layers size={20} color="var(--bordô)" /></div>
                 <h3 style={{ fontSize: '15px', marginBottom: '6px' }}>Design system legado</h3>
                 <p style={{ fontSize: '14px' }}>Decisão intencional: construir no sistema existente acelerava a implementação. Velocidade pesou mais que perfeição técnica.</p>
               </div>
@@ -728,18 +728,18 @@ export default function CaseAssistenciaSaude() {
             <div className="before-after">
               <div className="before-side">
                 <div className="ba-label before">Antes — Lógica do produto</div>
-                <div className="ba-item">📁 Usar assistência</div>
-                <div className="ba-item">🔔 Acionar seguro</div>
-                <div className="ba-item">👤 Beneficiários do seguro</div>
-                <div className="ba-item">⋯ Mais opções</div>
+                <div className="ba-item"><Folder size={15} color="var(--text-dim)" /> Usar assistência</div>
+                <div className="ba-item"><Bell size={15} color="var(--text-dim)" /> Acionar seguro</div>
+                <div className="ba-item"><User size={15} color="var(--text-dim)" /> Beneficiários do seguro</div>
+                <div className="ba-item"><MoreHorizontal size={15} color="var(--text-dim)" /> Mais opções</div>
                 <p style={{ fontSize: '12px', marginTop: '14px', color: 'var(--text-dim)' }}>O usuário precisava entender a estrutura do produto para navegar.</p>
               </div>
               <div className="after-side">
                 <div className="ba-label after">Depois — Lógica do uso</div>
-                <div className="ba-item">🩺 Consulta online</div>
-                <div className="ba-item">🏥 Consulta presencial</div>
-                <div className="ba-item">💊 Desconto farmácia</div>
-                <div className="ba-item">👨‍👩‍👧 Dependentes</div>
+                <div className="ba-item"><Stethoscope size={15} color="var(--bordô)" /> Consulta online</div>
+                <div className="ba-item"><Building2 size={15} color="var(--bordô)" /> Consulta presencial</div>
+                <div className="ba-item"><Pill size={15} color="var(--bordô)" /> Desconto farmácia</div>
+                <div className="ba-item"><Users size={15} color="var(--bordô)" /> Dependentes</div>
                 <p style={{ fontSize: '12px', marginTop: '14px', color: 'var(--text-dim)' }}>Hierarquia validada pelo card sorting. O usuário encontra pelo que quer fazer.</p>
               </div>
             </div>
@@ -777,26 +777,30 @@ export default function CaseAssistenciaSaude() {
 
           {/* Mapa de influência */}
           <div className="fade-up stagger-2">
-            <div className="influence-grid">
-              <div className="influence-card">
-                <div className="influence-who">👥 GPM e PM</div>
-                <div className="influence-need">Precisavam ver ao vivo</div>
-                <div className="influence-how">Convidei o GPM e a PM para estarem na sala como ouvintes. Os insights chegaram diretamente, não filtrados por relatório. Isso eliminou a distância entre o problema e a decisão.</div>
+            <div className="grid-2">
+              <div className="card card-neutral">
+                <div style={{ marginBottom: '12px' }}><Users2 size={20} color="var(--bordô)" /></div>
+                <h3 style={{ fontSize: '15px', marginBottom: '4px' }}>GPM e PM</h3>
+                <p style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--bordô)', marginBottom: '10px' }}>Precisavam ver ao vivo</p>
+                <p style={{ fontSize: '14px' }}>Convidei o GPM e a PM para estarem na sala como ouvintes. Os insights chegaram diretamente, não filtrados por relatório. Isso eliminou a distância entre o problema e a decisão.</p>
               </div>
-              <div className="influence-card">
-                <div className="influence-who">🤔 Liderança cética</div>
-                <div className="influence-need">Em vez de argumentar, convidei para ver</div>
-                <div className="influence-how">Uma liderança de outro time não acreditava que a solução traria ganhos reais. Quando viu as dúvidas dos usuários ao vivo, a posição mudou. A fala foi direta: "não havia dimensionado o quanto aquela agenda seria rica."</div>
+              <div className="card card-neutral">
+                <div style={{ marginBottom: '12px' }}><Eye size={20} color="var(--bordô)" /></div>
+                <h3 style={{ fontSize: '15px', marginBottom: '4px' }}>Liderança cética</h3>
+                <p style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--bordô)', marginBottom: '10px' }}>Em vez de argumentar, convidei para ver</p>
+                <p style={{ fontSize: '14px' }}>Uma liderança de outro time não acreditava que a solução traria ganhos reais. Quando viu as dúvidas dos usuários ao vivo, a posição mudou. A fala foi direta: "não havia dimensionado o quanto aquela agenda seria rica."</p>
               </div>
-              <div className="influence-card">
-                <div className="influence-who">⚡ CTO</div>
-                <div className="influence-need">A evidência falou por si</div>
-                <div className="influence-how">Quando questionou a priorização do redesign, a resposta foi o material completo, da guerrilha ao teste estruturado. Depois de ler, não havia mais questionamento.</div>
+              <div className="card card-neutral">
+                <div style={{ marginBottom: '12px' }}><Zap size={20} color="var(--bordô)" /></div>
+                <h3 style={{ fontSize: '15px', marginBottom: '4px' }}>CTO</h3>
+                <p style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--bordô)', marginBottom: '10px' }}>A evidência falou por si</p>
+                <p style={{ fontSize: '14px' }}>Quando questionou a priorização do redesign, a resposta foi o material completo, da guerrilha ao teste estruturado. Depois de ler, não havia mais questionamento.</p>
               </div>
-              <div className="influence-card">
-                <div className="influence-who">📊 Além do escopo</div>
-                <div className="influence-need">Infraestrutura de dados</div>
-                <div className="influence-how">As telas não tinham tracking. Aproveitei a janela para resolver isso. O que antes era uma tela sem rastreabilidade se tornou três telas com tracking próprio. O time passou a ter visibilidade de comportamento onde antes havia ausência total de dado.</div>
+              <div className="card card-neutral">
+                <div style={{ marginBottom: '12px' }}><DatabaseZap size={20} color="var(--bordô)" /></div>
+                <h3 style={{ fontSize: '15px', marginBottom: '4px' }}>Além do escopo</h3>
+                <p style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--bordô)', marginBottom: '10px' }}>Infraestrutura de dados</p>
+                <p style={{ fontSize: '14px' }}>As telas não tinham tracking. Aproveitei a janela para resolver isso. O que antes era uma tela sem rastreabilidade se tornou três telas com tracking próprio. O time passou a ter visibilidade de comportamento onde antes havia ausência total de dado.</p>
               </div>
             </div>
           </div>
