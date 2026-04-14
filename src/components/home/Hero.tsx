@@ -5,9 +5,9 @@ export default function Hero() {
       className="min-h-screen flex flex-col justify-center pt-16"
     >
       <div className="max-w-6xl mx-auto w-full px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
           {/* Text */}
-          <div className="order-2 lg:order-1">
+          <div className="order-1 lg:order-1 mt-5 lg:mt-0">
             {/* Eyebrow */}
             <span
               className="inline-flex self-start items-center px-3 py-1 rounded-full border border-[rgba(127,29,29,0.25)] text-[#7F1D1D] text-[10px] font-semibold tracking-[0.12em] uppercase mb-6 fade-in-up"
@@ -25,7 +25,7 @@ export default function Hero() {
 
             {/* Subtitle */}
             <p
-              className="text-[#6B6B6B] text-base md:text-lg leading-relaxed mb-12 max-w-lg fade-in-up"
+              className="text-[#6B6B6B] text-base md:text-lg leading-relaxed mb-6 md:mb-12 max-w-lg fade-in-up"
               style={{ animationDelay: '0.1s' }}
             >
               Product Designer com foco na construção de produtos em ambientes
@@ -60,10 +60,10 @@ export default function Hero() {
 
           {/* Photo */}
           <div
-            className="order-1 lg:order-2 fade-in"
+            className="order-2 lg:order-2 mb-5 lg:mb-0 fade-in"
             style={{ animationDelay: '0.15s' }}
           >
-            <div className="aspect-[4/5] w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-2xl bg-[#F5F4F0]">
+            <div className="aspect-square lg:aspect-[4/5] w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-2xl bg-[#F5F4F0]">
               <img
                 src="/bruno-almeida-2.jpeg"
                 alt="Bruno Almeida"

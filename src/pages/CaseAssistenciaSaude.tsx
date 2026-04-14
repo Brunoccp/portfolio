@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 
 const caseCss = `
 /* ── TOKENS ── */
@@ -30,7 +31,7 @@ h1 { font-family: 'Raleway', sans-serif; font-size: clamp(36px, 5vw, 68px); font
 h2 { font-family: 'Raleway', sans-serif; font-size: clamp(24px, 3vw, 40px); font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; color: var(--text); }
 h3 { font-family: 'Raleway', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
 p { font-size: 16px; line-height: 1.75; color: var(--text-muted); font-family: 'Inter', sans-serif; }
-.stat-num { font-family: 'Raleway', sans-serif; font-size: clamp(40px, 4.5vw, 64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--bordô); }
+.stat-num { font-family: 'Inter', sans-serif; font-size: clamp(40px, 4.5vw, 64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--bordô); }
 .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.10em; color: var(--text-dim); margin-top: 8px; font-family: 'Inter', sans-serif; }
 
 /* ── NAV ── */
@@ -204,6 +205,9 @@ section { min-height: 100vh; padding: 120px 64px 80px; display: flex; flex-direc
 .stagger-3 { transition-delay: 0.3s; }
 .stagger-4 { transition-delay: 0.4s; }
 
+/* ── STAT GRID ── */
+.stat-grid { display: grid; grid-template-columns: repeat(4, auto); gap: 0 48px; justify-content: start; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border); }
+
 /* ── RESPONSIVO ── */
 @media (max-width: 900px) {
   section { padding: 100px 24px 60px; }
@@ -212,9 +216,16 @@ section { min-height: 100vh; padding: 120px 64px 80px; display: flex; flex-direc
   .summary-grid, .before-after, .influence-grid, .result-grid,
   .reframe-vs { grid-template-columns: 1fr; }
   .before-side { border-right: none; border-bottom: 1px solid var(--border); }
-  .timeline { flex-direction: column; gap: 24px; }
-  .timeline-step::after { display: none; }
+  .timeline { flex-direction: column; align-items: stretch; gap: 0; }
+  .timeline-step { flex: none; width: 100%; display: flex; flex-direction: row; align-items: flex-start; gap: 16px; text-align: left; padding-bottom: 32px; }
+  .timeline-step:last-child { padding-bottom: 0; }
+  .timeline-circle { flex-shrink: 0; }
+  .timeline-content { margin-top: 12px; padding: 0; }
+  .timeline-step:not(:last-child)::after { top: 40px; left: 19px; width: 2px; height: calc(100% - 40px); background: linear-gradient(180deg, var(--bordô), rgba(127,29,29,0.08)); }
   .photo-item.tall { grid-row: span 1; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+  .stat-num { font-size: 26px; }
+  #heroCover { cursor: zoom-in; }
 }
 `
 
@@ -275,6 +286,13 @@ export default function CaseAssistenciaSaude() {
         openLightbox((img as HTMLImageElement).src, (img as HTMLImageElement).alt)
       )
     })
+
+    const heroCover = document.getElementById('heroCover') as HTMLImageElement | null
+    heroCover?.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        openLightbox(heroCover.src, heroCover.alt)
+      }
+    })
     overlay?.addEventListener('click', e => { if (e.target === overlay) closeLightbox() })
     lbClose?.addEventListener('click', closeLightbox)
 
@@ -315,9 +333,9 @@ export default function CaseAssistenciaSaude() {
       {/* NAV */}
       <nav id="mainNav">
         <div className="nav-left">
-          <Link to="/" className="nav-back">← Portfólio</Link>
+          <Link to="/" className="nav-back"><ArrowLeft size={18} /></Link>
           <div className="nav-sep"></div>
-          <div className="nav-brand">Assistência Saúde — <span>PicPay</span></div>
+          <div className="nav-brand">Assistência Saúde</div>
         </div>
         <div className="nav-dots">
           <div className="nav-dot active" data-section="hero"></div>
@@ -361,7 +379,7 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           {/* Stats */}
-          <div className="fade-up stagger-3" style={{ display: 'flex', gap: '48px', flexWrap: 'wrap', marginTop: '48px', paddingTop: '40px', borderTop: '1px solid var(--border)' }}>
+          <div className="stat-grid fade-up stagger-3">
             <div><div className="stat-num">16%</div><div className="stat-label">Churn inicial</div></div>
             <div><div className="stat-num">↓ 0,97 p.p.</div><div className="stat-label">Redução após mudanças</div></div>
             <div><div className="stat-num">~5 mil</div><div className="stat-label">Apólices preservadas</div></div>
@@ -389,7 +407,7 @@ export default function CaseAssistenciaSaude() {
           {/* Hero image */}
           <div className="fade-up" style={{ marginTop: '48px' }}>
             <div className="hero-image">
-              <img src="/cases/assistencia-saude/cover.svg" alt="Capa do case — Assistência Saúde" style={{ objectFit: 'contain', background: '#f5f5f5' }} loading="eager" />
+              <img id="heroCover" src="/cases/assistencia-saude/cover.svg" alt="Capa do case — Assistência Saúde" style={{ objectFit: 'contain', background: '#f5f5f5' }} loading="eager" />
             </div>
           </div>
 
