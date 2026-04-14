@@ -60,15 +60,48 @@ export default function Hero() {
 
           {/* Photo */}
           <div
-            className="order-2 lg:order-2 mb-5 lg:mb-0 fade-in"
+            className="order-2 lg:order-2 mt-10 lg:mt-0 mb-5 lg:mb-0 fade-in"
             style={{ animationDelay: '0.15s' }}
           >
-            <div className="aspect-square w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-2xl bg-[#161616]">
-              <img
-                src="/bruno-almeida-2.jpeg"
-                alt="Bruno Almeida"
-                className="w-full h-full object-cover"
+            <div className="relative w-full max-w-[230px] lg:max-w-sm mx-auto lg:mx-0 lg:ml-auto">
+              {/* Glassmorphism circle — offset 20% top-left */}
+              <div
+                className="absolute rounded-full"
+                style={{
+                  top: '-20%',
+                  left: '-20%',
+                  right: '20%',
+                  bottom: '20%',
+                  background: 'rgba(255,255,255,0.04)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255,255,255,0.35)',
+                  boxShadow: '0 0 24px rgba(255,255,255,0.06)',
+                }}
               />
+              {/* Glassmorphism circle — offset 20% bottom-right */}
+              <div
+                className="absolute rounded-full"
+                style={{
+                  top: '20%',
+                  left: '20%',
+                  right: '-20%',
+                  bottom: '-20%',
+                  background: 'rgba(110,232,64,0.07)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(110,232,64,0.25)',
+                  boxShadow: '0 0 24px rgba(110,232,64,0.08)',
+                }}
+              />
+              {/* Image square with green border */}
+              <div className="relative aspect-square overflow-hidden border-2 border-[#6EE840]">
+                <img
+                  src="/bruno-almeida-2.jpeg"
+                  alt="Bruno Almeida"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>

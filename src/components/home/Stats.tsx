@@ -1,6 +1,6 @@
 export default function Stats() {
   return (
-    <section className="pt-10 pb-20 md:py-20 bg-[#111111] border-t-2 border-b-2 border-[#6EE840]">
+    <section className="pt-10 pb-20 md:py-20 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', boxShadow: 'inset 0 0 80px rgba(255,255,255,0.03), 0 1px 0 rgba(255,255,255,0.08), 0 -1px 0 rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
 

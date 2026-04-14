@@ -655,9 +655,9 @@ export default function CaseAssistenciaSaude() {
                 </div>
                 <div className="photo-caption">Resultado - Participante 5</div>
               </div>
-              <div className="photo-item rotate-ccw">
-                <div className="photo-media">
-                  <img src="/cases/assistencia-saude/card-sorting7.png" alt="Teste estruturado em andamento" loading="lazy" />
+              <div className="photo-item">
+                <div className="photo-media" style={{ flex: 1, height: 'auto' }}>
+                  <img src="/cases/assistencia-saude/Teste-Estruturado.jpeg" alt="Teste estruturado em andamento" loading="lazy" style={{ objectPosition: 'center center' }} />
                 </div>
                 <div className="photo-caption">Resultado - Participante 6</div>
               </div>

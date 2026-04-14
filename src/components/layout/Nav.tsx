@@ -24,7 +24,7 @@ export default function Nav() {
       <nav className="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
         <Link
           to="/"
-          className="flex items-center gap-2.5 font-display font-bold text-sm tracking-wide text-[#6EE840] hover:text-[#8FF563] transition-colors"
+          className="flex items-center gap-2.5 font-display font-bold text-sm tracking-wide text-white hover:text-[#6EE840] transition-colors"
         >
           <img
             src="/bruno-almeida.jpg"
@@ -45,7 +45,7 @@ export default function Nav() {
                 Cases
               </a>
               <a
-                href="mailto:brunoccp2@gmail.com"
+                href="https://wa.me/5511933794008"
                 className="text-[rgba(255,255,255,0.5)] text-sm hover:text-white transition-colors"
               >
                 Contato
@@ -60,7 +60,7 @@ export default function Nav() {
                 Cases
               </Link>
               <a
-                href="mailto:brunoccp2@gmail.com"
+                href="https://wa.me/5511933794008"
                 className="text-[rgba(255,255,255,0.5)] text-sm hover:text-white transition-colors"
               >
                 Contato
