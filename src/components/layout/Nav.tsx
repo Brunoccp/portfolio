@@ -6,6 +6,10 @@ export default function Nav() {
   const location = useLocation()
 
   useEffect(() => {
+    setScrolled(false)
+  }, [location.pathname])
+
+  useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
