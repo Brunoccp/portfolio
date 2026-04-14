@@ -39,12 +39,6 @@ export default function Nav() {
           {isHome ? (
             <>
               <a
-                href="#about"
-                className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
-              >
-                Sobre
-              </a>
-              <a
                 href="#work"
                 className="text-[#6B6B6B] text-sm hover:text-[#1A1A1A] transition-colors"
               >

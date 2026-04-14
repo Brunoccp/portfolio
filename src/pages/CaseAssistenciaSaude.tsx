@@ -104,18 +104,28 @@ section { min-height: 100vh; padding: 120px 64px 80px; display: flex; flex-direc
 /* ── HIP ROW ── */
 .hip-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; transition: all 0.2s; }
 .hip-row:hover { background: var(--bg-card-alt); }
+.hip-status { align-self: center; display: flex; align-items: center; }
 .hip-text strong { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); display: block; margin-bottom: 2px; }
 .hip-text span { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); }
 
 /* ── PHOTO GRID ── */
-.photo-grid-3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; gap: 12px; margin-top: 28px; }
+.photo-grid-3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; gap: 12px; margin-top: 28px; --media-h: clamp(180px, 18vw, 240px); }
+.photo-grid-3 .photo-media { height: var(--media-h); aspect-ratio: auto; }
+.photo-grid-3 .photo-media img { object-fit: cover; }
 .photo-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
-.photo-grid-mixed { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 28px; }
-.photo-item { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #F0ECE6; cursor: zoom-in; }
-.photo-item img { width: 100%; display: block; transition: transform 0.4s ease; }
+.photo-grid-mixed { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 28px; --media-h: clamp(180px, 18vw, 240px); }
+.photo-grid-mixed .photo-media { height: var(--media-h); aspect-ratio: auto; }
+.photo-grid-mixed .photo-media img { object-fit: cover; }
+.photo-grid-mixed .photo-item.rotate-ccw .photo-media { height: clamp(240px, 24vw, 340px); }
+.photo-grid-mixed .photo-item.rotate-ccw .photo-media img { object-fit: contain; transform: rotate(-90deg) scale(1.02); transform-origin: center; }
+.photo-item { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #F0ECE6; cursor: zoom-in; display: flex; flex-direction: column; }
+.photo-media { width: 100%; aspect-ratio: var(--ar, 16 / 10); background: #F0ECE6; }
+.photo-media img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.4s ease; }
 .photo-item:hover img { transform: scale(1.03); }
 .photo-item.tall { grid-row: span 2; }
-.photo-caption { padding: 8px 12px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); background: var(--bg-card); border-top: 1px solid var(--border); }
+.photo-item.phone { --ar: 9 / 16; }
+.photo-item.phone .photo-media img { object-fit: contain; }
+.photo-caption { padding: 8px 12px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); background: var(--bg-card); border-top: 1px solid var(--border); margin-top: auto; }
 
 /* ── BEFORE/AFTER ── */
 .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); margin-top: 28px; }
@@ -347,7 +357,7 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           <div className="fade-up stagger-2" style={{ marginTop: '20px', maxWidth: '640px' }}>
-            <p>Com 16% de churn em um produto de assistência saúde, o time buscava soluções de retenção. Identifiquei que estava atacando o sintoma errado — e mudei a direção antes de qualquer investimento em retenção.</p>
+            <p>Com 16% de churn em um produto de assistência saúde, o time buscava soluções de retenção. Identifiquei que estava atacando o sintoma errado, e mudei a direção antes de qualquer investimento em retenção.</p>
           </div>
 
           {/* Stats */}
@@ -362,15 +372,15 @@ export default function CaseAssistenciaSaude() {
           <div className="fade-up stagger-4">
             <div className="summary-grid">
               <div className="summary-item">
-                <div className="summary-key">Challenge</div>
+                <div className="summary-key">Desafio</div>
                 <div className="summary-val">Produto com 16% de churn. O time buscava retenção enquanto o problema real estava na experiência de pós-venda.</div>
               </div>
               <div className="summary-item">
-                <div className="summary-key">Strategy</div>
+                <div className="summary-key">Estratégia</div>
                 <div className="summary-val">Redefini o problema: churn era sintoma de desalinhamento entre promessa e experiência. Validei em duas camadas antes de propor qualquer solução.</div>
               </div>
               <div className="summary-item">
-                <div className="summary-key">Results</div>
+                <div className="summary-key">Resultados</div>
                 <div className="summary-val">↓ 0,97 p.p. no churn. ~5 mil apólices preservadas. Tracking implementado onde antes havia ausência total de dado.</div>
               </div>
             </div>
@@ -379,7 +389,7 @@ export default function CaseAssistenciaSaude() {
           {/* Hero image */}
           <div className="fade-up" style={{ marginTop: '48px' }}>
             <div className="hero-image">
-              <img src="/cases/assistencia-saude/IS-TOBE-hub.png" alt="Hub de pós-venda — AS IS vs TO BE" style={{ objectFit: 'contain', background: '#f5f5f5' }} loading="eager" />
+              <img src="/cases/assistencia-saude/cover.svg" alt="Capa do case — Assistência Saúde" style={{ objectFit: 'contain', background: '#f5f5f5' }} loading="eager" />
             </div>
           </div>
 
@@ -396,7 +406,7 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
-            <p>O produto era uma assistência saúde de baixo ticket. O plano de entrada oferecia telemedicina por R$3,80. O plano mais completo, por R$10,80, adicionava desconto em farmácia e consultas presenciais. Contratação em um clique, primeiro mês grátis. O modelo facilitava a entrada — mas reduzia o nível de consciência na decisão.</p>
+            <p>O produto era uma assistência saúde de baixo ticket. O plano de entrada oferecia telemedicina por R$3,80. O plano mais completo, por R$10,80, adicionava desconto em farmácia e consultas presenciais. Contratação em um clique, primeiro mês grátis. O modelo facilitava a entrada, mas reduzia o nível de consciência na decisão.</p>
           </div>
 
           {/* Reframe */}
@@ -420,7 +430,7 @@ export default function CaseAssistenciaSaude() {
 
           <div className="fade-up stagger-3" style={{ marginTop: '32px', maxWidth: '680px' }}>
             <h3 style={{ marginBottom: '12px' }}>Como cheguei nessa leitura</h3>
-            <p>Entrei no produto sem histórico. Esse distanciamento foi uma vantagem: ao navegar pelo pós-venda pela primeira vez, minha reação imediata foi <em>"qual é a proposta de valor desse produto?"</em> Antes de levar qualquer hipótese para o time, contratei o produto e tentei utilizar cada benefício. Tive dificuldades reais. Isso confirmou que havia algo estruturalmente errado na experiência — não apenas na comunicação da oferta.</p>
+            <p>Entrei no produto sem histórico. Esse distanciamento foi uma vantagem: ao navegar pelo pós-venda pela primeira vez, minha reação imediata foi <em>"qual é a proposta de valor desse produto?"</em> Antes de levar qualquer hipótese para o time, contratei o produto e tentei utilizar cada benefício. Tive dificuldades reais. Isso confirmou que havia algo estruturalmente errado na experiência, não apenas na comunicação da oferta.</p>
           </div>
 
         </div>
@@ -447,14 +457,14 @@ export default function CaseAssistenciaSaude() {
               <h3>Camada 1 — Guerrilha</h3>
               <span className="badge badge-bordô">5 usuários · Rápido · Direcionado</span>
             </div>
-            <p style={{ maxWidth: '640px' }}>Abordei 5 pessoas com perfil de cliente PicPay e observei enquanto navegavam pela jornada de contratação e pós-venda no meu celular. O objetivo não era exploração aberta — era testar hipóteses específicas sobre o desalinhamento.</p>
+            <p style={{ maxWidth: '640px' }}>Abordei 5 pessoas com perfil de cliente PicPay e observei enquanto navegavam pela jornada de contratação e pós-venda no meu celular. O objetivo não era exploração aberta, era testar hipóteses específicas sobre o desalinhamento.</p>
           </div>
 
           {/* Hipóteses */}
           <div className="fade-up stagger-3" style={{ marginTop: '24px' }}>
             <div className="hip-row">
               <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
-              <div className="hip-text"><strong>O pós-venda é confuso?</strong><span>Todos associaram "acionar seguro" à telemedicina — esse não era o caminho correto.</span></div>
+              <div className="hip-text"><strong>O pós-venda é confuso?</strong><span>Todos associaram "acionar seguro" à telemedicina, esse não era o caminho correto.</span></div>
             </div>
             <div className="hip-row">
               <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
@@ -462,11 +472,11 @@ export default function CaseAssistenciaSaude() {
             </div>
             <div className="hip-row">
               <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
-              <div className="hip-text"><strong>"Beneficiário" e "dependente" geram confusão?</strong><span>A interface priorizava quem recebe o seguro em falecimento — não quem usa os benefícios. Nenhum usuário distinguiu os dois.</span></div>
+              <div className="hip-text"><strong>"Beneficiário" e "dependente" geram confusão?</strong><span>A interface priorizava quem recebe o seguro em falecimento, não quem usa os benefícios. Nenhum usuário distinguiu os dois.</span></div>
             </div>
             <div className="hip-row">
               <div className="hip-status"><span className="badge badge-refutada">Refutada</span></div>
-              <div className="hip-text"><strong>Contratam o plano caro porque vem selecionado?</strong><span>Não — contratam pelo valor percebido no desconto farmácia frente à pequena diferença de preço.</span></div>
+              <div className="hip-text"><strong>Contratam o plano caro porque vem selecionado?</strong><span>Não, contratam pelo valor percebido no desconto farmácia frente à pequena diferença de preço.</span></div>
             </div>
             <div className="hip-row">
               <div className="hip-status"><span className="badge badge-refutada">Refutada</span></div>
@@ -490,25 +500,41 @@ export default function CaseAssistenciaSaude() {
           <div className="fade-up" style={{ marginTop: '28px' }}>
             <div className="section-label">Bastidores — Guerrilha</div>
             <div className="photo-grid-3">
-              <div className="photo-item tall">
-                <img src="/cases/assistencia-saude/roteiro-guerrilha.jpg" alt="Roteiro de hipóteses" loading="lazy" style={{ objectFit: 'cover', height: '100%' }} />
+              <div className="photo-item">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/roteiro-guerrilha.jpg" alt="Roteiro de hipóteses" loading="lazy" />
+                </div>
                 <div className="photo-caption">Roteiro de Hipóteses</div>
               </div>
               <div className="photo-item">
-                <img src="/cases/assistencia-saude/notas-guerrilha.png" alt="Anotações ao vivo" loading="lazy" style={{ objectFit: 'cover', maxHeight: '240px', width: '100%' }} />
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/notas-guerrilha.png" alt="Anotações ao vivo" loading="lazy" />
+                </div>
                 <div className="photo-caption">Anotações ao vivo</div>
               </div>
               <div className="photo-item">
-                <img src="/cases/assistencia-saude/persona1.png" alt="Produto atual no teste" loading="lazy" style={{ objectFit: 'contain', maxHeight: '240px', background: '#f0ece6' }} />
-                <div className="photo-caption">Produto durante teste</div>
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/persona1.png" alt="Produto atual no teste" loading="lazy" />
+                </div>
+                <div className="photo-caption">Produto usado durante guerrilha</div>
               </div>
               <div className="photo-item">
-                <img src="/cases/assistencia-saude/persona2.png" alt="Participante 2" loading="lazy" style={{ objectFit: 'contain', maxHeight: '240px', background: '#f0ece6' }} />
-                <div className="photo-caption">Perfil de participante</div>
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/persona2.png" alt="Participante 2" loading="lazy" />
+                </div>
+                <div className="photo-caption">Produto usado durante guerrilha</div>
               </div>
               <div className="photo-item">
-                <img src="/cases/assistencia-saude/persona3.png" alt="Participante 3" loading="lazy" style={{ objectFit: 'contain', maxHeight: '240px', background: '#f0ece6' }} />
-                <div className="photo-caption">Perfil de participante</div>
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/persona3.png" alt="Participante 3" loading="lazy" />
+                </div>
+                <div className="photo-caption">Produto usado durante guerrilha</div>
+              </div>
+              <div className="photo-item">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/teste-estruturado-2.png" alt="Teste estruturado em andamento" loading="lazy" />
+                </div>
+                <div className="photo-caption">Produto usado durante guerrilha</div>
               </div>
             </div>
           </div>
@@ -521,7 +547,7 @@ export default function CaseAssistenciaSaude() {
               <h3>Camada 2 — Pesquisa Estruturada</h3>
               <span className="badge badge-dourado">10 participantes · 20 dias · Aprovado pela liderança</span>
             </div>
-            <p style={{ maxWidth: '640px' }}>Com os sinais da guerrilha, apresentei para GPM, Head de Produto e PM. Mostrei que havia feito uma primeira rodada rápida para ter direção — e que precisava aumentar a amostragem para confirmar o desalinhamento como driver do churn. O time aprovou. Estruturei um plano de 20 dias dentro de uma janela de 30 dias disponível para implementação.</p>
+            <p style={{ maxWidth: '640px' }}>Com os sinais da guerrilha, apresentei para GPM, Head de Produto e PM. Mostrei que havia feito uma primeira rodada rápida para ter direção, e que precisava aumentar a amostragem para confirmar o desalinhamento como driver do churn. O time aprovou. Estruturei um plano de 20 dias dentro de uma janela de 30 dias disponível para implementação.</p>
           </div>
 
           {/* Timeline do plano */}
@@ -554,27 +580,25 @@ export default function CaseAssistenciaSaude() {
           {/* 3 camadas do teste */}
           <div className="fade-up stagger-2" style={{ marginTop: '40px' }}>
             <h3 style={{ marginBottom: '20px' }}>Três camadas sequenciais do teste</h3>
-            <div className="timeline-v">
-              <div className="timeline-v-item">
-                <div className="timeline-v-line-wrap"><div className="timeline-v-circle">1</div></div>
-                <div className="timeline-v-content">
-                  <div className="timeline-v-title">Produto atual — ampliar a amostra</div>
-                  <div className="timeline-v-desc">Garantir que os problemas identificados na guerrilha não eram artefato do teste anterior. Aumentar a base de evidência antes de propor solução.</div>
-                </div>
+            <div className="aprendizado-item">
+              <div className="aprendizado-num">01</div>
+              <div>
+                <div className="aprendizado-title">Produto atual — ampliar a amostra</div>
+                <div className="aprendizado-desc">Garantir que os problemas identificados na guerrilha não eram artefato do teste anterior. Aumentar a base de evidência antes de propor solução.</div>
               </div>
-              <div className="timeline-v-item">
-                <div className="timeline-v-line-wrap"><div className="timeline-v-circle">2</div></div>
-                <div className="timeline-v-content">
-                  <div className="timeline-v-title">Card sorting — hierarquia definida por comportamento real</div>
-                  <div className="timeline-v-desc">Entreguei cards com informações do pós-venda e pedi que os participantes organizassem da forma que fizesse mais sentido. 80% priorizaram consultas e desconto farmácia no topo. "Consulta online" venceu "telemedicina". Essas escolhas foram diretamente para a interface — não como sugestão, como decisão de produto.</div>
-                </div>
+            </div>
+            <div className="aprendizado-item">
+              <div className="aprendizado-num">02</div>
+              <div>
+                <div className="aprendizado-title">Card sorting — hierarquia definida por comportamento real</div>
+                <div className="aprendizado-desc">Entreguei cards com informações do pós-venda e pedi que os participantes organizassem da forma que fizesse mais sentido. 80% priorizaram consultas e desconto farmácia no topo. "Consulta online" venceu "telemedicina". Essas escolhas foram diretamente para a interface, não como sugestão, como decisão de produto.</div>
               </div>
-              <div className="timeline-v-item">
-                <div className="timeline-v-line-wrap"><div className="timeline-v-circle">3</div></div>
-                <div className="timeline-v-content">
-                  <div className="timeline-v-title">Nova proposta — as mesmas tarefas que haviam falhado</div>
-                  <div className="timeline-v-desc">Participantes realizaram as mesmas tarefas do produto atual na nova interface. Encontraram o desconto farmácia. Conseguiram iniciar a telemedicina. Navegaram sem as dúvidas anteriores. O teste não apenas diagnosticou — validou que a solução funcionava.</div>
-                </div>
+            </div>
+            <div className="aprendizado-item">
+              <div className="aprendizado-num">03</div>
+              <div>
+                <div className="aprendizado-title">Nova proposta — as mesmas tarefas que haviam falhado</div>
+                <div className="aprendizado-desc">Participantes realizaram as mesmas tarefas do produto atual na nova interface. Encontraram o desconto farmácia. Conseguiram iniciar a telemedicina. Navegaram sem as dúvidas anteriores. O teste não apenas diagnosticou, validou que a solução funcionava.</div>
               </div>
             </div>
           </div>
@@ -583,29 +607,41 @@ export default function CaseAssistenciaSaude() {
           <div className="fade-up stagger-3" style={{ marginTop: '28px' }}>
             <div className="section-label">Card Sorting — 10 participantes</div>
             <div className="photo-grid-mixed">
-              <div className="photo-item">
-                <img src="/cases/assistencia-saude/card-sorting.jpeg" alt="Sessão com moderação" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
-                <div className="photo-caption">Sessão com GPM e PM como observadores</div>
+              <div className="photo-item rotate-ccw">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/card-sorting.jpeg" alt="Sessão com moderação" loading="lazy" />
+                </div>
+                <div className="photo-caption">Resultado - Participante 1</div>
               </div>
-              <div className="photo-item">
-                <img src="/cases/assistencia-saude/card-sorting2.jpeg" alt="Organização dos cards" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
-                <div className="photo-caption">Organização inicia dos cards</div>
+              <div className="photo-item rotate-ccw">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/card-sorting2.jpeg" alt="Organização dos cards" loading="lazy" />
+                </div>
+                <div className="photo-caption">Resultado - Participante 2</div>
               </div>
-              <div className="photo-item">
-                <img src="/cases/assistencia-saude/card-sorting3.jpeg" alt="Resultado do sorting" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
-                <div className="photo-caption">Cards organizados — resultado</div>
+              <div className="photo-item rotate-ccw">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/card-sorting3.jpeg" alt="Resultado do sorting" loading="lazy" />
+                </div>
+                <div className="photo-caption">Resultado - Participante 3</div>
               </div>
-              <div className="photo-item">
-                <img src="/cases/assistencia-saude/card-sorting4.jpeg" alt="Moderação ao vivo" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
-                <div className="photo-caption">Moderação ao vivo</div>
+              <div className="photo-item rotate-ccw">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/card-sorting4.jpeg" alt="Moderação ao vivo" loading="lazy" />
+                </div>
+                <div className="photo-caption">Resultado - Participante 4</div>
               </div>
-              <div className="photo-item">
-                <img src="/cases/assistencia-saude/card-sorting5.jpeg" alt="Resultado 2" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
-                <div className="photo-caption">Resultado — participante 2</div>
+              <div className="photo-item rotate-ccw">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/card-sorting5.jpeg" alt="Resultado 2" loading="lazy" />
+                </div>
+                <div className="photo-caption">Resultado - Participante 5</div>
               </div>
-              <div className="photo-item">
-                <img src="/cases/assistencia-saude/card-sorting6.jpeg" alt="Padrão confirmado" loading="lazy" style={{ objectFit: 'cover', minHeight: '220px' }} />
-                <div className="photo-caption">Padrão confirmado entre participantes</div>
+              <div className="photo-item rotate-ccw">
+                <div className="photo-media">
+                  <img src="/cases/assistencia-saude/card-sorting7.png" alt="Teste estruturado em andamento" loading="lazy" />
+                </div>
+                <div className="photo-caption">Resultado - Participante 6</div>
               </div>
             </div>
           </div>
@@ -623,7 +659,7 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
-            <p>O produto operava com processos definidos pela seguradora parceira. Partir dessa clareza foi o que evitou que eu investisse tempo em soluções inviáveis — e direcionou o foco para a camada onde era possível gerar impacto real.</p>
+            <p>O produto operava com processos definidos pela seguradora parceira. Partir dessa clareza foi o que evitou que eu investisse tempo em soluções inviáveis, e direcionou o foco para a camada onde era possível gerar impacto real.</p>
           </div>
 
           {/* Restrições */}
@@ -695,11 +731,11 @@ export default function CaseAssistenciaSaude() {
           <div className="fade-up" style={{ marginTop: '32px' }}>
             <div className="photo-grid-2">
               <div className="photo-item">
-                <img src="/cases/assistencia-saude/IS-TOBE-hub.png" alt="Hub pós-venda AS IS vs TO BE" loading="lazy" style={{ objectFit: 'contain', maxHeight: '400px', background: '#f5f5f5' }} />
+                <img src="/cases/assistencia-saude/cover.svg" alt="Hub pós-venda AS IS vs TO BE" loading="lazy" style={{ objectFit: 'contain', maxHeight: '400px', background: '#f5f5f5' }} />
                 <div className="photo-caption">Hub de pós-venda — AS IS vs TO BE</div>
               </div>
               <div className="photo-item">
-                <img src="/cases/assistencia-saude/IS-TOBE-Beneficios.png" alt="Benefícios AS IS vs TO BE" loading="lazy" style={{ objectFit: 'contain', maxHeight: '400px', background: '#f5f5f5' }} />
+                <img src="/cases/assistencia-saude/Uso Beneficios - As IS - To BE.svg" alt="Benefícios AS IS vs TO BE" loading="lazy" style={{ objectFit: 'contain', maxHeight: '400px', background: '#f5f5f5' }} />
                 <div className="photo-caption">Uso de benefícios — AS IS vs TO BE</div>
               </div>
             </div>
@@ -718,7 +754,7 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
-            <p>A mudança de direção não foi resultado só de uma análise bem feita. Foi resultado de um processo deliberado de construção de evidência compartilhada. Mapeei quem precisava ser influenciado e o que movia cada um — cada abordagem foi diferente.</p>
+            <p>A mudança de direção não foi resultado só de uma análise bem feita. Foi resultado de um processo deliberado de construção de evidência compartilhada. Mapeei quem precisava ser influenciado e o que movia cada um, cada abordagem foi diferente.</p>
           </div>
 
           {/* Mapa de influência */}
@@ -727,7 +763,7 @@ export default function CaseAssistenciaSaude() {
               <div className="influence-card">
                 <div className="influence-who">👥 GPM e PM</div>
                 <div className="influence-need">Precisavam ver ao vivo</div>
-                <div className="influence-how">Convidei o GPM e a PM para estarem na sala como ouvintes. Os insights chegaram diretamente — não filtrados por relatório. Isso eliminou a distância entre o problema e a decisão.</div>
+                <div className="influence-how">Convidei o GPM e a PM para estarem na sala como ouvintes. Os insights chegaram diretamente, não filtrados por relatório. Isso eliminou a distância entre o problema e a decisão.</div>
               </div>
               <div className="influence-card">
                 <div className="influence-who">🤔 Liderança cética</div>
@@ -737,7 +773,7 @@ export default function CaseAssistenciaSaude() {
               <div className="influence-card">
                 <div className="influence-who">⚡ CTO</div>
                 <div className="influence-need">A evidência falou por si</div>
-                <div className="influence-how">Quando questionou a priorização do redesign, a resposta foi o material completo — da guerrilha ao teste estruturado. Depois de ler, não havia mais questionamento.</div>
+                <div className="influence-how">Quando questionou a priorização do redesign, a resposta foi o material completo, da guerrilha ao teste estruturado. Depois de ler, não havia mais questionamento.</div>
               </div>
               <div className="influence-card">
                 <div className="influence-who">📊 Além do escopo</div>
@@ -753,8 +789,8 @@ export default function CaseAssistenciaSaude() {
               <div className="section-label" style={{ marginBottom: '8px', color: 'var(--dourado)' }}>
                 Um driver identificado — e a decisão consciente de não agir agora
               </div>
-              <p style={{ marginTop: '8px' }}>Durante o processo, identifiquei um segundo driver relevante: <strong>baixa consciência de contratação</strong>. A combinação de primeiro mês grátis e contratação em um clique facilitava a entrada — mas parte do churn vinha de usuários que cancelavam sem saber que tinham o produto.</p>
-              <p style={{ marginTop: '12px' }}>Esse achado foi levado aos stakeholders. A decisão foi consciente: mesmo com esse driver identificado, o modelo de entrada compensava financeiramente. O driver não foi ignorado — entrou em backlog como hipótese para testes futuros. <strong>A decisão de não agir agora foi informada, não omissa.</strong></p>
+              <p style={{ marginTop: '8px' }}>Durante o processo, identifiquei um segundo driver relevante: <strong>baixa consciência de contratação</strong>. A combinação de primeiro mês grátis e contratação em um clique facilitava a entrada, mas parte do churn vinha de usuários que cancelavam sem saber que tinham o produto.</p>
+              <p style={{ marginTop: '12px' }}>Esse achado foi levado aos stakeholders. A decisão foi consciente: mesmo com esse driver identificado, o modelo de entrada compensava financeiramente. O driver não foi ignorado, entrou em backlog como hipótese para testes futuros. <strong>A decisão de não agir agora foi informada, não omissa.</strong></p>
             </div>
           </div>
 
@@ -793,7 +829,7 @@ export default function CaseAssistenciaSaude() {
 
           {/* Nota de calibração */}
           <div className="fade-up stagger-2" style={{ marginTop: '24px', maxWidth: '640px' }}>
-            <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--text-dim)', borderLeft: '2px solid var(--border)', paddingLeft: '16px' }}>Não é possível atribuir integralmente esse resultado às mudanças realizadas. O contexto envolvia múltiplas variáveis. Dois tipos de evidência sustentam a correlação: quantitativa — a redução coincidiu diretamente com as mudanças — e qualitativa — todas as dores mapeadas foram sanadas no teste estruturado.</p>
+            <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--text-dim)', borderLeft: '2px solid var(--border)', paddingLeft: '16px' }}>Não é possível atribuir integralmente esse resultado às mudanças realizadas. O contexto envolvia múltiplas variáveis. Dois tipos de evidência sustentam a correlação: quantitativa, a redução coincidiu diretamente com as mudanças, e qualitativa, todas as dores mapeadas foram sanadas no teste estruturado.</p>
           </div>
 
           <div className="divider"></div>
@@ -805,21 +841,21 @@ export default function CaseAssistenciaSaude() {
               <div className="aprendizado-num">01</div>
               <div>
                 <div className="aprendizado-title">O processo não é linear — reconhecer isso em tempo real é uma habilidade</div>
-                <div className="aprendizado-desc">Decidi encaixar o card sorting no teste já planejado não porque estava no roteiro, mas porque havia uma dúvida real que precisava de dado. Essa decisão mudou a interface. Processo bem executado não é sequência — é leitura contínua do que ainda está em aberto.</div>
+                <div className="aprendizado-desc">Decidi encaixar o card sorting no teste já planejado não porque estava no roteiro, mas porque havia uma dúvida real que precisava de dado. Essa decisão mudou a interface. Processo bem executado não é sequência, é leitura contínua do que ainda está em aberto.</div>
               </div>
             </div>
             <div className="aprendizado-item">
               <div className="aprendizado-num">02</div>
               <div>
                 <div className="aprendizado-title">A primeira versão é hipótese, não solução</div>
-                <div className="aprendizado-desc">Construí a primeira proposta com base nos insights da guerrilha. Depois do card sorting, revisei nomenclaturas. Depois do teste, a linguagem mudou novamente — os participantes chamavam o produto de "plano de saúde". Cada camada trouxe uma correção. Quem fecha o ciclo cedo demais perde essas correções.</div>
+                <div className="aprendizado-desc">Construí a primeira proposta com base nos insights da guerrilha. Depois do card sorting, revisei nomenclaturas. Depois do teste, a linguagem mudou novamente, os participantes chamavam o produto de "plano de saúde". Cada camada trouxe uma correção. Quem fecha o ciclo cedo demais perde essas correções.</div>
               </div>
             </div>
             <div className="aprendizado-item">
               <div className="aprendizado-num">03</div>
               <div>
                 <div className="aprendizado-title">Influenciar não é apresentar — é fazer as pessoas verem</div>
-                <div className="aprendizado-desc">Cada stakeholder precisava de uma abordagem diferente. Nenhuma foi igual. Todas foram intencionais. O resultado foi que nenhuma das melhorias precisou ser justificada depois — porque todos que precisavam decidir já haviam visto o problema de perto.</div>
+                <div className="aprendizado-desc">Cada stakeholder precisava de uma abordagem diferente. Nenhuma foi igual. Todas foram intencionais. O resultado foi que nenhuma das melhorias precisou ser justificada depois, porque todos que precisavam decidir já haviam visto o problema de perto.</div>
               </div>
             </div>
           </div>
