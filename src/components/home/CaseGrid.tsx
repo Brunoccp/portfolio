@@ -28,9 +28,9 @@ const cases: BentoCaseCard[] = [
     large: true,
   },
   {
-    company: 'TOTVS TECHFIN',
+    company: 'PICPAY',
     context: 'Em breve',
-    title: '84% de redução em chamados por dúvida.',
+    title: 'Um novo seguro de vida + IA',
     comingSoon: true,
     large: false,
   },

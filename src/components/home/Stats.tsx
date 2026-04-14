@@ -41,21 +41,33 @@ export default function Stats() {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <span className="font-display font-black text-5xl md:text-6xl text-white leading-none tracking-tight">
-                  84%
-                </span>
-                <p className="text-[rgba(255,255,255,0.6)] text-xs font-semibold tracking-[0.1em] uppercase mt-2">
-                  Redução de chamados
-                </p>
-                <p className="text-[rgba(255,255,255,0.7)] text-sm leading-relaxed">
-                  Por dúvida na TOTVS TECHFIN
-                </p>
-              </div>
             </div>
           </div>
 
         </div>
+
+        {/* Empresas */}
+        <div className="mt-12 pt-10 border-t border-[rgba(255,255,255,0.15)] flex flex-col sm:flex-row sm:items-center gap-6">
+          <span className="inline-flex self-start sm:self-auto items-center px-3 py-1 rounded-full border border-[rgba(255,255,255,0.3)] text-white text-[10px] font-semibold tracking-[0.12em] uppercase whitespace-nowrap">
+            Empresas que atuei
+          </span>
+          <div className="flex items-center gap-4">
+            {[
+              { src: '/logos/totvs.png', alt: 'TOTVS' },
+              { src: '/logos/techfin.png', alt: 'TOTVS TechFin' },
+              { src: '/logos/compass_uol_logo.jpeg', alt: 'Compass UOL' },
+              { src: '/logos/picpay.jpeg', alt: 'PicPay' },
+            ].map(({ src, alt }) => (
+              <div
+                key={alt}
+                className="w-12 h-12 rounded-full bg-white border-2 border-[rgba(255,255,255,0.2)] overflow-hidden flex-shrink-0 flex items-center justify-center"
+              >
+                <img src={src} alt={alt} className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   )

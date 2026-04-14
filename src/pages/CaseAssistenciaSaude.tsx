@@ -883,9 +883,8 @@ export default function CaseAssistenciaSaude() {
             <h3 style={{ marginBottom: '20px', color: 'var(--text-dim)' }}>Próximos cases</h3>
             <div style={{ maxWidth: '360px' }}>
               <div className="card" style={{ opacity: 0.6 }}>
-                <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-dim)', marginBottom: '8px' }}>TOTVS TECHFIN</div>
-                <div style={{ fontFamily: "'Raleway',sans-serif", fontSize: '16px', fontWeight: 700, color: 'var(--text-dim)' }}>Em breve</div>
-                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: '13px', color: 'var(--text-dim)', marginTop: '6px' }}>84% de redução de chamados por dúvida</div>
+                <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-dim)', marginBottom: '8px' }}>PicPay · Em breve</div>
+                <div style={{ fontFamily: "'Raleway',sans-serif", fontSize: '16px', fontWeight: 700, color: 'var(--text-dim)' }}>Um novo seguro de vida + IA</div>
               </div>
             </div>
           </div>
