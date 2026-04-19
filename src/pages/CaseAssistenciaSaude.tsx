@@ -374,7 +374,7 @@ export default function CaseAssistenciaSaude() {
             <h1>O problema não era churn.<br />Era percepção de valor.</h1>
           </div>
 
-          <div className="fade-up stagger-2" style={{ marginTop: '20px', maxWidth: '640px' }}>
+          <div className="fade-up stagger-2" style={{ marginTop: '20px' }}>
             <p>Com 16% de churn em um produto de assistência saúde, o time buscava soluções de retenção. Identifiquei que estava atacando o sintoma errado, e mudei a direção antes de qualquer investimento em retenção.</p>
           </div>
 
@@ -423,8 +423,8 @@ export default function CaseAssistenciaSaude() {
             <h2>O time via churn.<br />Eu vi colapso de valor percebido.</h2>
           </div>
 
-          <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
-            <p>O produto era uma assistência saúde de baixo ticket. O plano de entrada oferecia telemedicina por R$3,80. O plano mais completo, por R$10,80, adicionava desconto em farmácia e consultas presenciais. Contratação em um clique, primeiro mês grátis. O modelo facilitava a entrada, mas reduzia o nível de consciência na decisão.</p>
+          <div className="fade-up stagger-1" style={{ marginTop: '20px' }}>
+            <p>O produto era uma assistência saúde de baixo ticket. O plano de entrada oferecia telemedicina por R$3,80. O plano mais completo, por R$10,90, adicionava desconto em farmácia e consultas presenciais. Contratação em um clique, primeiro mês grátis. O modelo facilitava a entrada, mas reduzia o nível de consciência na decisão.</p>
           </div>
 
           {/* Reframe */}
@@ -440,15 +440,39 @@ export default function CaseAssistenciaSaude() {
                 <div className="reframe-arrow">→</div>
                 <div className="reframe-side after">
                   <div className="reframe-lbl after">Como eu li</div>
-                  <div className="reframe-txt">Churn é sintoma → o problema é o desalinhamento entre promessa e experiência de pós-venda</div>
+                  <div className="reframe-txt">Churn é sintoma → quebra de percepção de valor em dois momentos da jornada: na contratação (baixa consciência) e no uso (experiência que não sustenta a promessa)</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="fade-up stagger-3" style={{ marginTop: '32px', maxWidth: '680px' }}>
+          <div className="fade-up stagger-3" style={{ marginTop: '32px' }}>
             <h3 style={{ marginBottom: '12px' }}>Como cheguei nessa leitura</h3>
             <p>Entrei no produto sem histórico. Esse distanciamento foi uma vantagem: ao navegar pelo pós-venda pela primeira vez, minha reação imediata foi <em>"qual é a proposta de valor desse produto?"</em> Antes de levar qualquer hipótese para o time, contratei o produto e tentei utilizar cada benefício. Tive dificuldades reais. Isso confirmou que havia algo estruturalmente errado na experiência, não apenas na comunicação da oferta.</p>
+          </div>
+
+          <div className="fade-up stagger-4" style={{ marginTop: '32px' }}>
+            <div className="card card-neutral" style={{ padding: '32px' }}>
+              <p style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-dim)', marginBottom: '20px' }}>A quebra acontecia em dois momentos</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div>
+                  <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)', marginBottom: '8px' }}>Na contratação</div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>O modelo de entrada — primeiro mês grátis e contratação em um clique — facilitava a aquisição, mas reduzia o nível de consciência sobre o que estava sendo contratado. Reclamações recorrentes na categoria confirmavam um padrão: usuários sem clareza sobre o produto ou sobre a cobrança subsequente.</p>
+                </div>
+                <div style={{ height: '1px', background: 'var(--border)' }}></div>
+                <div>
+                  <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)', marginBottom: '8px' }}>No uso</div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Mesmo quando havia intenção de usar o produto, o usuário não conseguia acessar ou compreender os benefícios disponíveis. A experiência não sustentava a promessa feita na oferta — o valor percebido colapsava antes da primeira cobrança.</p>
+                </div>
+              </div>
+              <p style={{ marginTop: '20px', fontSize: '14px', paddingTop: '16px', borderTop: '1px solid var(--border)' }}>Os dois fatores atuavam de forma combinada: o usuário entrava com baixo entendimento e, ao tentar usar o produto, não conseguia reconhecer ou acessar valor. Isso encurtava o tempo disponível para que o produto se provasse relevante.</p>
+            </div>
+          </div>
+
+          <div className="fade-up" style={{ marginTop: '40px' }}>
+            <h3 style={{ marginBottom: '12px' }}>Como decidi em qual driver atuar</h3>
+            <p>O driver relacionado à baixa consciência na contratação apresentava potencial de impacto relevante, mas envolvia mudanças diretas no modelo de entrada do produto, com impacto esperado em conversão e aquisição. Esse modelo era estrutural para o negócio naquele momento, o que limitava a possibilidade de atuação dentro do escopo do projeto.</p>
+            <p style={{ marginTop: '12px' }}>Diante desse contexto, a decisão foi direcionar os esforços para o desalinhamento entre promessa e experiência no pós-venda.</p>
           </div>
 
         </div>
@@ -463,7 +487,7 @@ export default function CaseAssistenciaSaude() {
             <h2>Primeiro a direção.<br />Depois o investimento.</h2>
           </div>
 
-          <div className="fade-up stagger-1" style={{ maxWidth: '640px', marginTop: '16px' }}>
+          <div className="fade-up stagger-1" style={{ marginTop: '16px' }}>
             <p>Estruturei a validação em duas camadas deliberadas: uma guerrilha rápida para ter direção antes de pedir recurso, e um teste estruturado aprovado pela liderança para confirmar e aprofundar.</p>
           </div>
 
@@ -475,11 +499,15 @@ export default function CaseAssistenciaSaude() {
               <h3>Camada 1 — Guerrilha</h3>
               <span className="badge badge-bordô">5 usuários · Rápido · Direcionado</span>
             </div>
-            <p style={{ maxWidth: '640px' }}>Abordei 5 pessoas com perfil de cliente PicPay e observei enquanto navegavam pela jornada de contratação e pós-venda no meu celular. O objetivo não era exploração aberta, era testar hipóteses específicas sobre o desalinhamento.</p>
+            <p>Abordei 5 pessoas com perfil de cliente PicPay e observei enquanto navegavam pela jornada de contratação e pós-venda no meu celular. O objetivo não era exploração aberta, era testar hipóteses específicas sobre o desalinhamento.</p>
           </div>
 
           {/* Hipóteses */}
           <div className="fade-up stagger-3" style={{ marginTop: '24px' }}>
+            <div className="hip-row">
+              <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
+              <div className="hip-text"><strong>O cliente entende a proposta de valor?</strong><span>Todos entenderam que era um produto de saúde com telemedicina e consultas. O problema não era o entendimento do produto — era o acesso aos benefícios.</span></div>
+            </div>
             <div className="hip-row">
               <div className="hip-status"><span className="badge badge-validada">Validada</span></div>
               <div className="hip-text"><strong>O pós-venda é confuso?</strong><span>Todos associaram "acionar seguro" à telemedicina, esse não era o caminho correto.</span></div>
@@ -503,7 +531,8 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           {/* Quotes */}
-          <div className="fade-up stagger-4" style={{ marginTop: '8px' }}>
+          <div className="fade-up stagger-4" style={{ marginTop: '16px' }}>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)', borderLeft: '2px solid var(--bordô)', paddingLeft: '16px', marginBottom: '20px' }}>O que os testes revelaram foi além do esperado. Dois participantes verbalizaram em tempo real que teriam cancelado o produto se não estivessem sendo observados. A frustração não era silenciosa — era declarada.</p>
             <div className="quote-block">
               "Onde eu acho meu desconto farmácia? Achei que teria algum cupom aqui pra usar na farmácia."
               <cite>Usuário durante guerrilha — comprou o produto por um benefício que não conseguia acessar</cite>
@@ -565,7 +594,7 @@ export default function CaseAssistenciaSaude() {
               <h3>Camada 2 — Pesquisa Estruturada</h3>
               <span className="badge badge-dourado">10 participantes · 20 dias · Aprovado pela liderança</span>
             </div>
-            <p style={{ maxWidth: '640px' }}>Com os sinais da guerrilha, apresentei para GPM, Head de Produto e PM. Mostrei que havia feito uma primeira rodada rápida para ter direção, e que precisava aumentar a amostragem para confirmar o desalinhamento como driver do churn. O time aprovou. Estruturei um plano de 20 dias dentro de uma janela de 30 dias disponível para implementação.</p>
+            <p>Com os sinais da guerrilha, apresentei para GPM, Head de Produto e PM. Mostrei que havia feito uma primeira rodada rápida para ter direção, e que precisava aumentar a amostragem para confirmar o desalinhamento como driver do churn. O time aprovou. Estruturei um plano de 20 dias dentro de uma janela de 30 dias disponível para implementação.</p>
           </div>
 
           {/* Timeline do plano */}
@@ -609,7 +638,7 @@ export default function CaseAssistenciaSaude() {
               <div className="aprendizado-num">02</div>
               <div>
                 <div className="aprendizado-title">Card sorting — hierarquia definida por comportamento real</div>
-                <div className="aprendizado-desc">Entreguei cards com informações do pós-venda e pedi que os participantes organizassem da forma que fizesse mais sentido. 80% priorizaram consultas e desconto farmácia no topo. "Consulta online" venceu "telemedicina". Essas escolhas foram diretamente para a interface, não como sugestão, como decisão de produto.</div>
+                <div className="aprendizado-desc">Entreguei cards com informações do pós-venda e pedi que os participantes organizassem da forma que fizesse mais sentido. 80% priorizaram consultas e desconto farmácia no topo. "Consulta online" venceu "telemedicina". "Detalhes do seguro" venceu "gestão do seguro". Essas escolhas foram diretamente para a hierarquia e nomenclatura da nova interface, não como sugestão, como decisão de produto.</div>
               </div>
             </div>
             <div className="aprendizado-item">
@@ -676,7 +705,7 @@ export default function CaseAssistenciaSaude() {
             <h2>Não foi um redesign.<br />Foi uma decisão sobre o que era possível mudar.</h2>
           </div>
 
-          <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
+          <div className="fade-up stagger-1" style={{ marginTop: '20px' }}>
             <p>O produto operava com processos definidos pela seguradora parceira. Partir dessa clareza foi o que evitou que eu investisse tempo em soluções inviáveis, e direcionou o foco para a camada onde era possível gerar impacto real.</p>
           </div>
 
@@ -708,7 +737,7 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           {/* Decisão estratégica */}
-          <div className="fade-up stagger-3" style={{ marginTop: '32px', maxWidth: '680px' }}>
+          <div className="fade-up stagger-3" style={{ marginTop: '32px' }}>
             <div className="card card-bordô">
               <div className="section-label" style={{ marginBottom: '8px' }}>A decisão estratégica</div>
               <p>Se não posso mudar o processo, garanto que o usuário sabe o que vai acontecer em cada etapa. Para cada benefício, o esqueleto informativo foi o mesmo:</p>
@@ -771,12 +800,12 @@ export default function CaseAssistenciaSaude() {
             <h2>Não apresentei dados.<br />Fiz o time ver o problema.</h2>
           </div>
 
-          <div className="fade-up stagger-1" style={{ maxWidth: '680px', marginTop: '20px' }}>
+          <div className="fade-up stagger-1" style={{ marginTop: '20px' }}>
             <p>A mudança de direção não foi resultado só de uma análise bem feita. Foi resultado de um processo deliberado de construção de evidência compartilhada. Mapeei quem precisava ser influenciado e o que movia cada um, cada abordagem foi diferente.</p>
           </div>
 
           {/* Mapa de influência */}
-          <div className="fade-up stagger-2">
+          <div className="fade-up stagger-2" style={{ marginTop: '32px' }}>
             <div className="grid-2">
               <div className="card card-neutral">
                 <div style={{ marginBottom: '12px' }}><Users2 size={20} color="var(--bordô)" /></div>
@@ -805,17 +834,6 @@ export default function CaseAssistenciaSaude() {
             </div>
           </div>
 
-          {/* Segundo driver */}
-          <div className="fade-up stagger-3" style={{ marginTop: '40px' }}>
-            <div className="card card-dourado">
-              <div className="section-label" style={{ marginBottom: '8px', color: 'var(--dourado)' }}>
-                Um driver identificado — e a decisão consciente de não agir agora
-              </div>
-              <p style={{ marginTop: '8px' }}>Durante o processo, identifiquei um segundo driver relevante: <strong>baixa consciência de contratação</strong>. A combinação de primeiro mês grátis e contratação em um clique facilitava a entrada, mas parte do churn vinha de usuários que cancelavam sem saber que tinham o produto.</p>
-              <p style={{ marginTop: '12px' }}>Esse achado foi levado aos stakeholders. A decisão foi consciente: mesmo com esse driver identificado, o modelo de entrada compensava financeiramente. O driver não foi ignorado, entrou em backlog como hipótese para testes futuros. <strong>A decisão de não agir agora foi informada, não omissa.</strong></p>
-            </div>
-          </div>
-
         </div>
       </section>
 
@@ -834,7 +852,7 @@ export default function CaseAssistenciaSaude() {
               <div className="result-card">
                 <div className="result-num">↓ 0,97 p.p.</div>
                 <div className="result-label">Churn reduzido</div>
-                <div className="result-desc">Em relação ao patamar inicial de 16%</div>
+                <div className="result-desc">Em relação ao patamar inicial de 16%, estabilizando nesse novo nível</div>
               </div>
               <div className="result-card">
                 <div className="result-num">~5 mil</div>
@@ -850,8 +868,14 @@ export default function CaseAssistenciaSaude() {
           </div>
 
           {/* Nota de calibração */}
-          <div className="fade-up stagger-2" style={{ marginTop: '24px', maxWidth: '640px' }}>
-            <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--text-dim)', borderLeft: '2px solid var(--border)', paddingLeft: '16px' }}>Não é possível atribuir integralmente esse resultado às mudanças realizadas. O contexto envolvia múltiplas variáveis. Dois tipos de evidência sustentam a correlação: quantitativa, a redução coincidiu diretamente com as mudanças, e qualitativa, todas as dores mapeadas foram sanadas no teste estruturado.</p>
+          <div className="fade-up stagger-2" style={{ marginTop: '24px' }}>
+            <p>O resultado confirma que o desalinhamento entre promessa e experiência era um driver real do churn. Ao mesmo tempo, a magnitude da redução indica que atuar exclusivamente no pós-venda não resolve o problema de forma estrutural.</p>
+            <p style={{ marginTop: '12px' }}>A leitura que se sustenta é que a quebra de percepção de valor está distribuída ao longo da jornada — entre entrada e uso. Resolver um dos dois não é suficiente.</p>
+            <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--text-dim)', borderLeft: '2px solid var(--border)', paddingLeft: '16px', marginTop: '16px' }}>Não é possível atribuir integralmente esse resultado às mudanças realizadas. Dois tipos de evidência sustentam a correlação: quantitativa, a redução coincidiu diretamente com as mudanças, e qualitativa, todas as dores mapeadas foram sanadas no teste estruturado.</p>
+            <div className="card card-bordô" style={{ marginTop: '20px' }}>
+              <div className="section-label" style={{ marginBottom: '8px' }}>O próximo passo</div>
+              <p style={{ fontSize: '14px' }}>Atuar na contratação — testando o impacto do aumento de consciência sobre churn e LTV. A hipótese é introduzir fricção intencional no fluxo, priorizando a qualidade da base em vez de volume de aquisição: menor churn, maior uso, maior LTV.</p>
+            </div>
           </div>
 
           <div className="divider"></div>
