@@ -120,7 +120,7 @@ const assistenciaSaude: CaseData = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Produto de baixo ticket com dois planos: R$3,80 (telemedicina) e R$10,80 (telemedicina + desconto farmácia + consultas presenciais). Distribuído via app com contratação em um clique e primeiro mês grátis. O modelo facilitava a entrada mas reduzia o nível de consciência na decisão de contratação.',
+          text: 'Produto de baixo ticket com dois planos: R$3,80 (telemedicina) e R$10,90 (telemedicina + desconto farmácia + consultas presenciais). Distribuído via app com contratação em um clique e primeiro mês grátis. O modelo facilitava a entrada mas reduzia o nível de consciência na decisão de contratação.',
         },
       ],
     },
@@ -135,6 +135,10 @@ const assistenciaSaude: CaseData = {
         {
           type: 'paragraph',
           text: 'Como cheguei nessa leitura: entrei no produto sem histórico — esse distanciamento foi uma vantagem. Ao navegar pelo pós-venda pela primeira vez, minha reação imediata foi: "qual é a proposta de valor desse produto?" Contratei o produto e tentei usar cada benefício. Tive dificuldades reais. Isso confirmou que havia algo estruturalmente errado.',
+        },
+        {
+          type: 'paragraph',
+          text: 'Essa quebra não acontecia em um único ponto. Ela se manifestava em dois momentos distintos: na contratação, o modelo de entrada reduzia o nível de consciência sobre o que estava sendo contratado; no uso, a experiência não sustentava a promessa feita na oferta, e o valor percebido colapsava antes da primeira cobrança. Os dois fatores atuavam de forma combinada.',
         },
       ],
     },
@@ -428,7 +432,7 @@ const assistenciaSaude: CaseData = {
     },
   ],
   metricsNote:
-    'Não é possível atribuir integralmente esse resultado às mudanças — múltiplas variáveis envolvidas. Duas evidências sustentam a correlação: quantitativa (redução coincidiu com as mudanças) e qualitativa (todas as dores mapeadas foram sanadas no teste estruturado).',
+    'O resultado confirma que o desalinhamento entre promessa e experiência era um driver real do churn. Ao mesmo tempo, a magnitude indica que atuar exclusivamente no pós-venda não resolve o problema de forma estrutural — a quebra de percepção de valor está distribuída ao longo da jornada, entre entrada e uso.',
 }
 
 export default assistenciaSaude
